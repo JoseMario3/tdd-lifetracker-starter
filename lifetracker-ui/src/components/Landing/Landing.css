@@ -1,0 +1,28 @@
+.landing-page {
+    max-width: 100%;
+    height: calc(100% - 100px);
+    min-height: calc(100% - 100px);
+    overflow-x: hidden;
+    background: #2c4147;
+}
+
+.landing-page .content .hero {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.landing-page .content .hero .hero-img {
+    position: absolute;
+}
+
+.landing-page .content .cta h1,
+.Landing .content .cta p {
+    color: white;
+    position: relative;
+    z-index: 10;
+}
+
+.landing-page .content .cta p {
+    font-size: 24px;
+}
