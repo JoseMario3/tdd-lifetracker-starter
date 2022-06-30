@@ -1,0 +1,20 @@
+.not-found {
+    display: flex;
+    max-width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    height: 613px;
+    background: #9381ff;
+    color: #f8f7ff;
+}
+
+.not-found .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-found .text {
+    margin-bottom: 20px;
+}

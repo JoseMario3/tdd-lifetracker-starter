@@ -6,14 +6,14 @@ import RegistrationPage from "../RegistrationPage/RegistrationPage";
 //import ActivityPage from "../ActivityPage/ActivityPage";
 //import NutritionPage from "../NutritionPage/NutritionPage";
 //import AccessForbidden from "../AccessForbidden/AccessForbidden";
-//import NotFound from "../NotFound/NotFound";
+import NotFound from "../NotFound/NotFound";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState({});
 
   return (
     <div className="app">
@@ -22,12 +22,18 @@ export default function App() {
           <Navbar loggedIn={loggedIn} />
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegistrationPage />} />
+            <Route
+              path="/login"
+              element={<LoginPage setLoggedIn={setLoggedIn} />}
+            />
+            <Route
+              path="/register"
+              element={<RegistrationPage setLoggedIn={setLoggedIn} />}
+            />
             {/*<Route path="/activity" element={<ActivityPage />} />
             <Route path="/nutrition/*" element={<NutritionPage />} />
-            <Route path="/nutrition" element={<AccessForbidden />} />
-            <Route path="*" element={<NotFound />} /> */}
+            <Route path="/nutrition" element={<AccessForbidden />} />*/}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </React.Fragment>

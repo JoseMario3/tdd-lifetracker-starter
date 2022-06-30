@@ -802,6 +802,10 @@ Here are the pieces of functionality that should be built out for the backend:
       - [ ] Implement the features outlined in the tests until they're all passing
   - [ ] Commit all work to `git`
 
+# Open-Source Sites
+
+https://icon-icons.com/icon/exercise-plan-consistant-fitness-diet/149054 (exercise logo)
+
 ## Wrapping Up and Resources
 
 This is a huge project and represents a complete application with user-owned resources. Accordingly, it can, should, and will test the limits of your capabilities. Do your best and don't be afraid to Google! Especially in regards to any SQL that might be tricky.
