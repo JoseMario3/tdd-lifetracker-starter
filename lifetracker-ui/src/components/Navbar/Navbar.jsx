@@ -13,7 +13,7 @@ export default function Navbar(props) {
             <img src={exerciselogo} className="logo-img" alt="logo" />
           </Link>
         </div>
-        <Navlinks loggedIn={props.loggedIn} />
+        <Navlinks loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />
       </div>
     </nav>
   );

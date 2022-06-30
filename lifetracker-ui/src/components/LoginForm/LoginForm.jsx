@@ -3,8 +3,8 @@ import * as React from "react";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
-export default function LoginForm() {
-  //const navigate = useNavigate();
+export default function LoginForm(props) {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
@@ -23,6 +23,13 @@ export default function LoginForm() {
         setErrors((e) => ({ ...e, email: null }));
       }
     }
+
+    if (event.target.name === "password") {
+      if (event.target.value !== "") {
+        setErrors((e) => ({ ...e, password: null }));
+      }
+    }
+
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
 
@@ -31,15 +38,28 @@ export default function LoginForm() {
     setIsLoading(true);
     setErrors((e) => ({ ...e, form: null }));
 
+    if (form.email === "") {
+      setErrors((e) => ({ ...e, email: "Please enter an email" }));
+      setIsLoading(false);
+      return;
+    }
+
+    if (form.password === "") {
+      setErrors((e) => ({ ...e, password: "Please enter a password" }));
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const response = await axios.post(
         `http://localhost:3001/auth/login`,
         form
       );
-      if (res?.data) {
-        props.setLoggedIn(res.data);
+      if (response?.data) {
+        props.setAppState(response.data);
+        props.setLoggedIn(true);
         setIsLoading(false);
-        //navigate("/activity");
+        navigate("/activity");
       } else {
         setErrors((e) => ({
           ...e,

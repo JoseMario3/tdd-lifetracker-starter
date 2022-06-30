@@ -1,15 +1,16 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import "./RegistrationForm";
 
-export default function RegistrationForm() {
+export default function RegistrationForm(props) {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     username: "",
     email: "",
     password: "",
@@ -48,12 +49,84 @@ export default function RegistrationForm() {
       }
     }
 
+    if (event.target.name === "username") {
+      if (event.target.value !== "") {
+        setErrors((e) => ({ ...e, username: null }));
+      }
+    }
+
+    if (event.target.name === "first_name") {
+      if (event.target.value !== "") {
+        setErrors((e) => ({ ...e, first_name: null }));
+      }
+    }
+
+    if (event.target.name === "last_name") {
+      if (event.target.value !== "") {
+        setErrors((e) => ({ ...e, last_name: null }));
+      }
+    }
+
+    if (event.target.name === "password") {
+      if (event.target.value !== "") {
+        setErrors((e) => ({ ...e, password: null }));
+      }
+    }
+
+    if (event.target.name === "confirmPassword") {
+      if (event.target.value !== "") {
+        setErrors((e) => ({ ...e, confirmPassword: null }));
+      }
+    }
+
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
 
   const handleOnSubmit = async () => {
     setIsLoading(true);
     setErrors((e) => ({ ...e, form: null }));
+
+    if (form.email === "") {
+      setErrors((e) => ({ ...e, email: "Please enter an email" }));
+      setIsLoading(false);
+      return;
+    }
+
+    if (form.username === "") {
+      setErrors((e) => ({ ...e, username: "Please enter a username" }));
+      setIsLoading(false);
+      return;
+    }
+
+    if (form.first_name === "") {
+      setErrors((e) => ({
+        ...e,
+        first_name: "Please enter your first name",
+      }));
+      setIsLoading(false);
+      return;
+    }
+
+    if (form.last_name === "") {
+      setErrors((e) => ({ ...e, last_name: "Please enter your last name" }));
+      setIsLoading(false);
+      return;
+    }
+
+    if (form.password === "") {
+      setErrors((e) => ({ ...e, password: "Please enter a password" }));
+      setIsLoading(false);
+      return;
+    }
+
+    if (form.confirmPassword === "") {
+      setErrors((e) => ({
+        ...e,
+        confirmPassword: "Please confirm your password",
+      }));
+      setIsLoading(false);
+      return;
+    }
 
     if (form.passwordConfirm !== form.password) {
       setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match." }));
@@ -65,17 +138,18 @@ export default function RegistrationForm() {
 
     try {
       const res = await axios.post("http://localhost:3001/auth/register", {
-        location: form.location,
-        firstName: form.firstName,
-        lastName: form.lastName,
+        username: form.username,
+        first_name: form.first_name,
+        last_name: form.last_name,
         email: form.email,
         password: form.password,
       });
 
       if (res?.data?.user) {
-        setAppState(res.data);
+        props.setAppState(res.data);
+        props.setLoggedIn(true);
         setIsLoading(false);
-        //navigate("/portal")
+        navigate("/");
       } else {
         setErrors((e) => ({
           ...e,
@@ -98,7 +172,7 @@ export default function RegistrationForm() {
     <div className="card">
       <h2>Register</h2>
       <div className="form">
-        <div class="input-field">
+        <div className="input-field">
           <label>Email</label>
           <input
             className="form-input"
@@ -110,7 +184,7 @@ export default function RegistrationForm() {
           />
           {errors.email && <span className="error">{errors.email}</span>}
         </div>
-        <div class="input-field">
+        <div className="input-field">
           <label>Username</label>
           <input
             className="form-input"
@@ -122,37 +196,37 @@ export default function RegistrationForm() {
           />
           {errors.username && <span className="error">{errors.username}</span>}
         </div>
-        <div class="split-input-field">
-          <div class="input-field">
+        <div className="split-input-field">
+          <div className="input-field">
             <label>First Name</label>
             <input
               className="form-input"
               type="text"
-              name="firstName"
+              name="first_name"
               placeholder="First Name"
-              value={form.firstName}
+              value={form.first_name}
               onChange={handleOnInputChange}
             />
-            {errors.firstName && (
-              <span className="error">{errors.firstName}</span>
+            {errors.first_name && (
+              <span className="error">{errors.first_name}</span>
             )}
           </div>
-          <div class="input-field">
+          <div className="input-field">
             <label>Last Name</label>
             <input
               className="form-input"
               type="text"
-              name="lastName"
+              name="last_name"
               placeholder="Last Name"
-              value={form.lastName}
+              value={form.last_name}
               onChange={handleOnInputChange}
             />
-            {errors.lastName && (
-              <span className="error">{errors.lastName}</span>
+            {errors.last_name && (
+              <span className="error">{errors.last_name}</span>
             )}
           </div>
         </div>
-        <div class="input-field">
+        <div className="input-field">
           <label>Password</label>
           <input
             className="form-input"
@@ -164,7 +238,7 @@ export default function RegistrationForm() {
           />
           {errors.password && <span className="error">{errors.password}</span>}
         </div>
-        <div class="input-field">
+        <div className="input-field">
           <label>Confirm Password</label>
           <input
             className="form-input"

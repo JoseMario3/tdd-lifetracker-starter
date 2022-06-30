@@ -13,22 +13,33 @@ import axios from "axios";
 import "./App.css";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState({});
+  const [appState, setAppState] = useState({});
+  const [loggedIn, setLoggedIn] = useState(false);
 
   return (
     <div className="app">
       <React.Fragment>
         <BrowserRouter>
-          <Navbar loggedIn={loggedIn} />
+          <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route
               path="/login"
-              element={<LoginPage setLoggedIn={setLoggedIn} />}
+              element={
+                <LoginPage
+                  setAppState={setAppState}
+                  setLoggedIn={setLoggedIn}
+                />
+              }
             />
             <Route
               path="/register"
-              element={<RegistrationPage setLoggedIn={setLoggedIn} />}
+              element={
+                <RegistrationPage
+                  setAppState={setAppState}
+                  setLoggedIn={setLoggedIn}
+                />
+              }
             />
             {/*<Route path="/activity" element={<ActivityPage />} />
             <Route path="/nutrition/*" element={<NutritionPage />} />
