@@ -1,0 +1,15 @@
+.Register,
+.Register .card {
+    display: flex;
+    align-items: center;
+}
+
+.Register {
+    min-height: calc(100vh - var(--navbar-height));
+    height: 100%;
+    max-height: calc(100vh - var(--navbar-height));
+    width: 100%;
+    max-width: 100vw;
+    background: #2c4147;
+    justify-content: center;
+}

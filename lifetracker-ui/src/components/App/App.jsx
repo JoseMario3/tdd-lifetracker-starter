@@ -1,8 +1,8 @@
 import * as React from "react";
 import Navbar from "../Navbar/Navbar";
 import Landing from "../Landing/Landing";
-//import LoginPage from "../LoginPage/LoginPage";
-//import RegistrationPage from "../RegistrationPage/RegistrationPage";
+import LoginPage from "../LoginPage/LoginPage";
+import RegistrationPage from "../RegistrationPage/RegistrationPage";
 //import ActivityPage from "../ActivityPage/ActivityPage";
 //import NutritionPage from "../NutritionPage/NutritionPage";
 //import AccessForbidden from "../AccessForbidden/AccessForbidden";
@@ -22,9 +22,9 @@ export default function App() {
           <Navbar loggedIn={loggedIn} />
           <Routes>
             <Route path="/" element={<Landing />} />
-            {/*<Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegistrationPage />} />
-            <Route path="/activity" element={<ActivityPage />} />
+            {/*<Route path="/activity" element={<ActivityPage />} />
             <Route path="/nutrition/*" element={<NutritionPage />} />
             <Route path="/nutrition" element={<AccessForbidden />} />
             <Route path="*" element={<NotFound />} /> */}
