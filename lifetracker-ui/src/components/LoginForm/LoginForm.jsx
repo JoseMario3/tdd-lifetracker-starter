@@ -1,12 +1,13 @@
 import axios from "axios";
-import * as React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
+import { AuthContext } from "../../../contexts/auth";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
-export default function LoginForm(props) {
+export default function LoginForm() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+  const { error, setError, loginUser, setLoggedIn } = useContext(AuthContext);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -18,15 +19,15 @@ export default function LoginForm(props) {
         (event.target.value.indexOf("@") === -1 && event.target.value !== "") ||
         event.target.value.indexOf("@") === 0
       ) {
-        setErrors((e) => ({ ...e, email: "Please enter a valid email" }));
+        setError((e) => ({ ...e, email: "Please enter a valid email" }));
       } else {
-        setErrors((e) => ({ ...e, email: null }));
+        setError((e) => ({ ...e, email: null }));
       }
     }
 
     if (event.target.name === "password") {
       if (event.target.value !== "") {
-        setErrors((e) => ({ ...e, password: null }));
+        setError((e) => ({ ...e, password: null }));
       }
     }
 
@@ -36,16 +37,16 @@ export default function LoginForm(props) {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    setErrors((e) => ({ ...e, form: null }));
+    setError((e) => ({ ...e, form: null }));
 
     if (form.email === "") {
-      setErrors((e) => ({ ...e, email: "Please enter an email" }));
+      setError((e) => ({ ...e, email: "Please enter an email" }));
       setIsLoading(false);
       return;
     }
 
     if (form.password === "") {
-      setErrors((e) => ({ ...e, password: "Please enter a password" }));
+      setError((e) => ({ ...e, password: "Please enter a password" }));
       setIsLoading(false);
       return;
     }
@@ -56,12 +57,11 @@ export default function LoginForm(props) {
         form
       );
       if (response?.data) {
-        props.setAppState(response.data);
-        props.setLoggedIn(true);
+        loginUser(response.data);
         setIsLoading(false);
         navigate("/activity");
       } else {
-        setErrors((e) => ({
+        setError((e) => ({
           ...e,
           form: "Invalid username/password combination",
         }));
@@ -70,7 +70,7 @@ export default function LoginForm(props) {
     } catch (err) {
       console.log(err);
       const message = err?.response?.data?.error?.message;
-      setErrors((e) => ({
+      setError((e) => ({
         ...e,
         form: message ? String(message) : String(err),
       }));
@@ -94,7 +94,7 @@ export default function LoginForm(props) {
             onChange={handleOnInputChange}
             value={form.email}
           />
-          {errors.email && <span className="error">{errors.email}</span>}
+          {error.email && <span className="error">{error.email}</span>}
         </div>
         <div className="input-field">
           <label>Password</label>
@@ -105,7 +105,7 @@ export default function LoginForm(props) {
             onChange={handleOnInputChange}
             value={form.password}
           />
-          {errors.password && <span className="error">{errors.password}</span>}
+          {error.password && <span className="error">{error.password}</span>}
         </div>
         <button className="btn" disabled={isLoading} onClick={handleOnSubmit}>
           {" "}

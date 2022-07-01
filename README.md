@@ -142,7 +142,7 @@ The components in the `App.jsx` file should render the following components (alo
     - [x] First, create a `contexts` directory at the root of the project
     - [x] Inside it, touch the `contexts/auth.jsx` file
     - [x] In that file, define a new `AuthContext` with `React.createContext`
-    - [ ] Use that context to create an `AuthContextProvider` component
+    - [x] Use that context to create an `AuthContextProvider` component
       - [x] The Provider component should create state variables and updaters needed for `user`, `initialized`, `isProcessing`, and `error`.
       - [ ] It should have a `React.useEffect` hook that fires when the component is mounted to the screen
         - [ ] That hook should check to see if a JWT token exists in local storage under the `lifetracker_token` key
@@ -162,8 +162,8 @@ The components in the `App.jsx` file should render the following components (alo
         - [ ] `fetchUserFromToken` - should make a request to the `/auth/me` route to get the user's info
         - [ ] `logoutUser` - this function should remove the `lifetracker_token` from local storage and refresh the page so that all user data is reset
       - [ ] Make sure to set all the state variables as the `value` prop passed to the `AuthContext.Provider` component
-    - [ ] Create and export a `useAuthContext` hook that calls the `React.useContext` hook with the newly created `AuthContext` and returns it.
-    - [ ] In `App.jsx` file create an `AppContainer` component that wraps the `App` component with the `AuthContextProvider` component (which should still be nested inside the `BrowserRouter` component from `react-router-dom`). Export the `AppContainer` component by default instead of the `App`
+    - [x] Create and export a `useAuthContext` hook that calls the `React.useContext` hook with the newly created `AuthContext` and returns it.
+    - [x] In `App.jsx` file create an `AppContainer` component that wraps the `App` component with the `AuthContextProvider` component (which should still be nested inside the `BrowserRouter` component from `react-router-dom`). Export the `AppContainer` component by default instead of the `App`
 
   - [x] The **`Loading.jsx`** component
 

@@ -1,13 +1,14 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../contexts/auth";
 import { useState } from "react";
 import axios from "axios";
 import "./RegistrationForm";
 
-export default function RegistrationForm(props) {
+export default function RegistrationForm() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+  const { error, setError, signupUser } = useContext(AuthContext);
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -20,22 +21,22 @@ export default function RegistrationForm(props) {
   const handleOnInputChange = (event) => {
     if (event.target.name === "password") {
       if (form.passwordConfirm && form.passwordConfirm !== event.target.value) {
-        setErrors((e) => ({
+        (e) => ({
           ...e,
           passwordConfirm: "Passwords do not match",
-        }));
+        });
       } else {
-        setErrors((e) => ({ ...e, passwordConfirm: null }));
+        setError((e) => ({ ...e, passwordConfirm: null }));
       }
     }
     if (event.target.name === "passwordConfirm") {
       if (form.password && form.password !== event.target.value) {
-        setErrors((e) => ({
+        setError((e) => ({
           ...e,
           passwordConfirm: "Passwords do not match",
         }));
       } else {
-        setErrors((e) => ({ ...e, passwordConfirm: null }));
+        setError((e) => ({ ...e, passwordConfirm: null }));
       }
     }
     if (event.target.name === "email") {
@@ -43,39 +44,39 @@ export default function RegistrationForm(props) {
         (event.target.value.indexOf("@") === -1 && event.target.value !== "") ||
         event.target.value.indexOf("@") === 0
       ) {
-        setErrors((e) => ({ ...e, email: "Please enter a valid email." }));
+        setError((e) => ({ ...e, email: "Please enter a valid email." }));
       } else {
-        setErrors((e) => ({ ...e, email: null }));
+        setError((e) => ({ ...e, email: null }));
       }
     }
 
     if (event.target.name === "username") {
       if (event.target.value !== "") {
-        setErrors((e) => ({ ...e, username: null }));
+        setError((e) => ({ ...e, username: null }));
       }
     }
 
     if (event.target.name === "first_name") {
       if (event.target.value !== "") {
-        setErrors((e) => ({ ...e, first_name: null }));
+        setError((e) => ({ ...e, first_name: null }));
       }
     }
 
     if (event.target.name === "last_name") {
       if (event.target.value !== "") {
-        setErrors((e) => ({ ...e, last_name: null }));
+        setError((e) => ({ ...e, last_name: null }));
       }
     }
 
     if (event.target.name === "password") {
       if (event.target.value !== "") {
-        setErrors((e) => ({ ...e, password: null }));
+        setError((e) => ({ ...e, password: null }));
       }
     }
 
     if (event.target.name === "confirmPassword") {
       if (event.target.value !== "") {
-        setErrors((e) => ({ ...e, confirmPassword: null }));
+        setError((e) => ({ ...e, confirmPassword: null }));
       }
     }
 
@@ -84,22 +85,22 @@ export default function RegistrationForm(props) {
 
   const handleOnSubmit = async () => {
     setIsLoading(true);
-    setErrors((e) => ({ ...e, form: null }));
+    setError((e) => ({ ...e, form: null }));
 
     if (form.email === "") {
-      setErrors((e) => ({ ...e, email: "Please enter an email" }));
+      setError((e) => ({ ...e, email: "Please enter an email" }));
       setIsLoading(false);
       return;
     }
 
     if (form.username === "") {
-      setErrors((e) => ({ ...e, username: "Please enter a username" }));
+      setError((e) => ({ ...e, username: "Please enter a username" }));
       setIsLoading(false);
       return;
     }
 
     if (form.first_name === "") {
-      setErrors((e) => ({
+      setError((e) => ({
         ...e,
         first_name: "Please enter your first name",
       }));
@@ -108,19 +109,19 @@ export default function RegistrationForm(props) {
     }
 
     if (form.last_name === "") {
-      setErrors((e) => ({ ...e, last_name: "Please enter your last name" }));
+      setError((e) => ({ ...e, last_name: "Please enter your last name" }));
       setIsLoading(false);
       return;
     }
 
     if (form.password === "") {
-      setErrors((e) => ({ ...e, password: "Please enter a password" }));
+      setError((e) => ({ ...e, password: "Please enter a password" }));
       setIsLoading(false);
       return;
     }
 
     if (form.confirmPassword === "") {
-      setErrors((e) => ({
+      setError((e) => ({
         ...e,
         confirmPassword: "Please confirm your password",
       }));
@@ -129,11 +130,11 @@ export default function RegistrationForm(props) {
     }
 
     if (form.passwordConfirm !== form.password) {
-      setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match." }));
+      setError((e) => ({ ...e, passwordConfirm: "Passwords do not match." }));
       setIsLoading(false);
       return;
     } else {
-      setErrors((e) => ({ ...e, passwordConfirm: null }));
+      setError((e) => ({ ...e, passwordConfirm: null }));
     }
 
     try {
@@ -146,12 +147,11 @@ export default function RegistrationForm(props) {
       });
 
       if (res?.data?.user) {
-        props.setAppState(res.data);
-        props.setLoggedIn(true);
+        signupUser(res.data);
         setIsLoading(false);
         navigate("/");
       } else {
-        setErrors((e) => ({
+        setError((e) => ({
           ...e,
           form: "Something went wrong with registration",
         }));
@@ -160,7 +160,7 @@ export default function RegistrationForm(props) {
     } catch (err) {
       console.log(err);
       const message = err?.response?.data?.error?.message;
-      setErrors((e) => ({
+      setError((e) => ({
         ...e,
         form: message ? String(message) : String(err),
       }));
@@ -182,7 +182,7 @@ export default function RegistrationForm(props) {
             value={form.email}
             onChange={handleOnInputChange}
           />
-          {errors.email && <span className="error">{errors.email}</span>}
+          {error.email && <span className="error">{error.email}</span>}
         </div>
         <div className="input-field">
           <label>Username</label>
@@ -194,7 +194,7 @@ export default function RegistrationForm(props) {
             value={form.username}
             onChange={handleOnInputChange}
           />
-          {errors.username && <span className="error">{errors.username}</span>}
+          {error.username && <span className="error">{error.username}</span>}
         </div>
         <div className="split-input-field">
           <div className="input-field">
@@ -207,8 +207,8 @@ export default function RegistrationForm(props) {
               value={form.first_name}
               onChange={handleOnInputChange}
             />
-            {errors.first_name && (
-              <span className="error">{errors.first_name}</span>
+            {error.first_name && (
+              <span className="error">{error.first_name}</span>
             )}
           </div>
           <div className="input-field">
@@ -221,8 +221,8 @@ export default function RegistrationForm(props) {
               value={form.last_name}
               onChange={handleOnInputChange}
             />
-            {errors.last_name && (
-              <span className="error">{errors.last_name}</span>
+            {error.last_name && (
+              <span className="error">{error.last_name}</span>
             )}
           </div>
         </div>
@@ -236,7 +236,7 @@ export default function RegistrationForm(props) {
             value={form.password}
             onChange={handleOnInputChange}
           />
-          {errors.password && <span className="error">{errors.password}</span>}
+          {error.password && <span className="error">{error.password}</span>}
         </div>
         <div className="input-field">
           <label>Confirm Password</label>
@@ -248,8 +248,8 @@ export default function RegistrationForm(props) {
             value={form.passwordConfirm}
             onChange={handleOnInputChange}
           />
-          {errors.passwordConfirm && (
-            <span className="error">{errors.passwordConfirm}</span>
+          {error.passwordConfirm && (
+            <span className="error">{error.passwordConfirm}</span>
           )}
         </div>
         <button className="submit-registration" onClick={handleOnSubmit}>

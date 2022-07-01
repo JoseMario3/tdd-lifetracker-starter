@@ -1,35 +1,34 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../contexts/auth";
 import "./Navlinks.css";
 
-export default function Navlinks(props) {
-  function handleSignOut() {
-    props.setLoggedIn(false);
-  }
+export default function Navlinks() {
+  const { loggedIn, logoutUser } = useContext(AuthContext);
 
   return (
     <ul className="links">
       <li>
-        <Link to={props.loggedIn ? "/activity" : "/login"}>Activity</Link>
+        <Link to={loggedIn ? "/activity" : "/login"}>Activity</Link>
       </li>
       <li>
-        <Link to={props.loggedIn ? "/excercise" : "/login"}>Exercise</Link>
+        <Link to={loggedIn ? "/excercise" : "/login"}>Exercise</Link>
       </li>
       <li>
-        <Link to={props.loggedIn ? "/nutrition" : "/login"}>Nutrition</Link>
+        <Link to={loggedIn ? "/nutrition" : "/login"}>Nutrition</Link>
       </li>
       <li>
-        <Link to={props.loggedIn ? "/sleep" : "/login"}>Sleep</Link>
+        <Link to={loggedIn ? "/sleep" : "/login"}>Sleep</Link>
       </li>
-      {props.loggedIn ? (
+      {loggedIn ? (
         <li className="signout-button">
-          <Link to="/" onClick={handleSignOut}>
+          <Link to="/" onClick={logoutUser}>
             Sign Out
           </Link>
         </li>
       ) : (
         <div className="notlogged">
-          <li>
+          <li className="login-button">
             <Link to="/login">Login</Link>
           </li>
           <li className="btn secondary">

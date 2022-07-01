@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Navlinks from "../Navlinks/Navlinks";
 import "./Navbar.css";
 
-export default function Navbar(props) {
+export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="content">
@@ -13,7 +13,7 @@ export default function Navbar(props) {
             <img src={exerciselogo} className="logo-img" alt="logo" />
           </Link>
         </div>
-        <Navlinks loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />
+        <Navlinks />
       </div>
     </nav>
   );

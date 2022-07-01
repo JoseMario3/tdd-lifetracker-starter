@@ -1,20 +1,30 @@
-import * as React from "react";
-import { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
+import axios from "axios";
 
-const AuthContext = createContext(defaultValue);
+export const AuthContext = createContext();
 
-export default function AuthContextProvider() {
-  const [user, setUser] = useState(AuthContext.Provider.value);
-  const [initialized, setInitialized] = useState(AuthContext.Provider.value);
-  const [isProcessing, setIsProcessing] = useState(AuthContext.Provider.value);
-  const [error, setError] = useState(AuthContext.Provider.value);
+/*
+export function useAuthContext() {
+  const context = React.useContext(AuthContext);
+  return context;
+}
+*/
 
-  function loginUser() {
-    return 0;
+export const AuthContextProvider = ({ children }) => {
+  const [user, setUser] = useState({});
+  const [initialized, setInitialized] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [error, setError] = useState({});
+
+  function loginUser(person) {
+    setLoggedIn(true);
+    setUser({ ...person.user });
   }
 
-  function signupUser() {
-    return 0;
+  function signupUser(person) {
+    setLoggedIn(true);
+    setUser(person);
   }
 
   function fetchUserFromToken() {
@@ -22,8 +32,52 @@ export default function AuthContextProvider() {
   }
 
   function logoutUser() {
-    return 0;
+    setLoggedIn(false);
+    setUser({});
   }
+  /*
+  useEffect(() => {
+    const getUser = async () => {
+      // if (lifetracker_token) {
+      //add to apiClient with setToken method
+      //}
 
-  useEffect(() => {});
-}
+      try {
+        setIsProcessing(true);
+        setError(null);
+        const response = await axios.get("http://localhost:3001");
+        console.log(response.data);
+      } catch (error) {
+        setError(error);
+      }
+
+      setIsProcessing(false);
+      setInitialized(true);
+    };
+
+    getUser();
+  }, []);
+*/
+  return (
+    <AuthContext.Provider
+      value={{
+        error,
+        setError,
+        user,
+        setUser,
+        initialized,
+        setInitialized,
+        isProcessing,
+        setIsProcessing,
+        loginUser,
+        signupUser,
+        fetchUserFromToken,
+        logoutUser,
+        loggedIn,
+        setLoggedIn,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};

@@ -2,13 +2,10 @@ import * as React from "react";
 import "./RegistrationPage.css";
 import RegistrationForm from "components/RegistrationForm/RegistrationForm";
 
-export default function RegistrationPage(props) {
+export default function RegistrationPage() {
   return (
     <div className="registration-page">
-      <RegistrationForm
-        setLoggedIn={props.setLoggedIn}
-        setAppState={props.setAppState}
-      />
+      <RegistrationForm />
     </div>
   );
 }
