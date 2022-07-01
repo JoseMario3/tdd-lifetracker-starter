@@ -8,6 +8,26 @@ Everywhere around us is data waiting to be collected and utilized. In recent yea
 
 This application will be built using the battle-tested PERN stack - PostgreSQL, Express, React, and Node.
 
+# Walkthrough Video
+
+https://youtu.be/p5_-KsRC6Ww
+
+# Core Features
+
+[x] The Nav Bar: Implement customized views for users who are logged in vs not logged in.
+[x] If the user is logged in, it should display a Sign Out button.
+[x] If no user is logged in, it should display Login and Register buttons
+[x] Display a logo on the far left side, and contain links to the individual detailed activity pages.
+[x] The Landing Page: Display a large hero image and a brief blurb on what this application is about.
+Note: This is the only page that unauthenticated users should be able to view.
+[x] Login Page: A form that allows users to login with email and password.
+[x] Registration Page: A form that allows the user to sign up with their email, password, username, first name, and last name.
+[x] When a user first authenticates, they should be redirected to an authenticated view (i.e the detailed activity page). When they sign out, all frontend data should be reset.
+[ ]The API should have a security middleware that only allows authenticated users to access resources and only allows users to access resources about themselves.
+[ ] Users should have the ability to track at least 1 types of activities (i.e Nutrition, Exercise, Sleep, etc.). Each activity should be tracked on separate pages.
+[ ] Deploy your website with Heroku & Surge. Checkout our Deploy with Heroku & Surge tutorial for detailed instructions.
+Note: Be sure to follow the deployment instructions for variation #2: Node/Express backend, React frontend, and Postgres database.
+
 ## Goals
 
 Building this application you will accomplish the following:
