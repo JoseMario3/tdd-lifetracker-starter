@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../../contexts/auth";
+import { useAuthContext } from "../../contexts/auth";
 import "./Navlinks.css";
 
 export default function Navlinks() {
-  const { loggedIn, logoutUser } = useContext(AuthContext);
+  const { loggedIn, logoutUser } = useAuthContext();
 
   return (
     <ul className="links">

@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../contexts/auth";
-import { useState } from "react";
-import axios from "axios";
+import { useAuthContext } from "../../contexts/auth";
+import apiClient from "./../../services/apiClient"
 import "./RegistrationForm";
 
 export default function RegistrationForm() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { error, setError, signupUser } = useContext(AuthContext);
+  const { error, setError, signupUser } = useAuthContext();
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -137,33 +136,14 @@ export default function RegistrationForm() {
       setError((e) => ({ ...e, passwordConfirm: null }));
     }
 
-    try {
-      const res = await axios.post("http://localhost:3001/auth/register", {
-        username: form.username,
-        first_name: form.first_name,
-        last_name: form.last_name,
-        email: form.email,
-        password: form.password,
-      });
-
-      if (res?.data?.user) {
-        signupUser(res.data);
-        setIsLoading(false);
-        navigate("/");
-      } else {
-        setError((e) => ({
-          ...e,
-          form: "Something went wrong with registration",
-        }));
-        setIsLoading(false);
-      }
-    } catch (err) {
-      console.log(err);
-      const message = err?.response?.data?.error?.message;
-      setError((e) => ({
-        ...e,
-        form: message ? String(message) : String(err),
-      }));
+    const { data, error } = await apiClient.signup(form);
+    if (error) {
+      setError((e) => ({ ...e, form: error }));
+      setIsLoading(false);
+    } else if (data?.user) {
+      signupUser(data.user);
+      apiClient.setToken(data.token);
+      navigate("/");
       setIsLoading(false);
     }
   };
@@ -171,6 +151,7 @@ export default function RegistrationForm() {
   return (
     <div className="card">
       <h2>Register</h2>
+      {error?.form && (<span className="error">{error.form}</span>)}
       <div className="form">
         <div className="input-field">
           <label>Email</label>

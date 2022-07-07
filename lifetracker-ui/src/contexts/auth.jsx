@@ -1,14 +1,11 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import axios from "axios";
+import ApiClient from "../services/apiClient";
 
 export const AuthContext = createContext();
 
-/*
 export function useAuthContext() {
-  const context = React.useContext(AuthContext);
-  return context;
+  return useContext(AuthContext);
 }
-*/
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
@@ -27,37 +24,29 @@ export const AuthContextProvider = ({ children }) => {
     setUser(person);
   }
 
-  function fetchUserFromToken() {
-    return 0;
+  async function fetchUserFromToken() {
+    const { data, error } = await ApiClient.fetchUserFromToken();
+    if (data) setUser(data.user);
+    if (error) setError(error);
   }
 
   function logoutUser() {
+    console.log(user);
     setLoggedIn(false);
+    ApiClient.setToken(null);
+    localStorage.setItem(this.tokenName, "");
     setUser({});
   }
-  /*
+
   useEffect(() => {
-    const getUser = async () => {
-      // if (lifetracker_token) {
-      //add to apiClient with setToken method
-      //}
-
-      try {
-        setIsProcessing(true);
-        setError(null);
-        const response = await axios.get("http://localhost:3001");
-        console.log(response.data);
-      } catch (error) {
-        setError(error);
-      }
-
-      setIsProcessing(false);
-      setInitialized(true);
-    };
-
-    getUser();
+    const token = localStorage.getItem("lifetracker_token");
+    if (token) {
+      console.log("setting token");
+      ApiClient.setToken(token);
+      fetchUserFromToken();
+    }
   }, []);
-*/
+
   return (
     <AuthContext.Provider
       value={{

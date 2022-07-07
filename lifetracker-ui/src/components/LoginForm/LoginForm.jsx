@@ -1,13 +1,13 @@
-import axios from "axios";
 import React, { useContext } from "react";
 import { useState } from "react";
-import { AuthContext } from "../../../contexts/auth";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../contexts/auth";
+import { Link, useNavigate } from "react-router-dom";
+import ApiClient from "../../services/apiClient"
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { error, setError, loginUser, setLoggedIn } = useContext(AuthContext);
+  const { error, setError, loginUser } = useAuthContext();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -51,29 +51,15 @@ export default function LoginForm() {
       return;
     }
 
-    try {
-      const response = await axios.post(
-        `http://localhost:3001/auth/login`,
-        form
-      );
-      if (response?.data) {
-        loginUser(response.data);
-        setIsLoading(false);
-        navigate("/activity");
-      } else {
-        setError((e) => ({
-          ...e,
-          form: "Invalid username/password combination",
-        }));
-        setIsLoading(false);
-      }
-    } catch (err) {
-      console.log(err);
-      const message = err?.response?.data?.error?.message;
-      setError((e) => ({
-        ...e,
-        form: message ? String(message) : String(err),
-      }));
+    const { data, error } = await ApiClient.login(form);
+    if (error) {
+      setError((e) => ({ ...e, form: error }));
+      setIsLoading(false);
+    } else if (data?.user) {
+      loginUser(data.user);
+      console.log(data.user);
+      ApiClient.setToken(data.token);
+      navigate("/activity");
       setIsLoading(false);
     }
   };
@@ -83,7 +69,7 @@ export default function LoginForm() {
       <div className="header">
         <h2>Login</h2>
       </div>
-      {/*<span className="error">You must be logged in to access that page</span>*/}
+      {error?.form && (<span className="error">{error.form}</span>)}
       <div className="form">
         <div className="input-field">
           <label>Email</label>
@@ -94,7 +80,7 @@ export default function LoginForm() {
             onChange={handleOnInputChange}
             value={form.email}
           />
-          {error.email && <span className="error">{error.email}</span>}
+          {error?.email && (<span className="error">{error.email}</span>)}
         </div>
         <div className="input-field">
           <label>Password</label>
@@ -105,7 +91,7 @@ export default function LoginForm() {
             onChange={handleOnInputChange}
             value={form.password}
           />
-          {error.password && <span className="error">{error.password}</span>}
+          {error?.password && (<span className="error">{error.password}</span>)}
         </div>
         <button className="btn" disabled={isLoading} onClick={handleOnSubmit}>
           {" "}

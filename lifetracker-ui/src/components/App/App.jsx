@@ -8,11 +8,12 @@ import RegistrationPage from "../RegistrationPage/RegistrationPage";
 //import AccessForbidden from "../AccessForbidden/AccessForbidden";
 import NotFound from "../NotFound/NotFound";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthContextProvider } from "../../../contexts/auth";
-import axios from "axios";
+import { AuthContextProvider, useAuthContext } from "../../contexts/auth";
+//import ApiClient from "../../services/apiClient";
 import "./App.css";
 
 export default function App() {
+
   return (
     <div className="app">
       <React.Fragment>
