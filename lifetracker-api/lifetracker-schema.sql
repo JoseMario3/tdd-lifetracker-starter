@@ -15,6 +15,6 @@ CREATE TABLE nutrition (
     category    TEXT NOT NULL,
     calories    TEXT NOT NULL,
     image_url   TEXT NOT NULL,
-    user_id     TEXT NOT NULL,
-    created_at  DATE NOT NULL DEFAULT CURRENT_DATE
+    created_at  DATE NOT NULL DEFAULT CURRENT_DATE,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
