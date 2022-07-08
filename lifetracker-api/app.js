@@ -14,8 +14,6 @@ app.use(security.extractUserFromJwt);
 app.use("/auth", authRoutes);
 app.use("/activity", activityRoutes);
 
-//psql -U postgres
-
 app.get("/", async(req, res) => {
     console.log(123);
     res.status(200).json({ ping: "pong" });
