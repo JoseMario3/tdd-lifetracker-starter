@@ -57,7 +57,6 @@ export default function LoginForm() {
       setIsLoading(false);
     } else if (data?.user) {
       loginUser(data.user);
-      console.log(data.user);
       ApiClient.setToken(data.token);
       navigate("/activity");
       setIsLoading(false);

@@ -10,7 +10,6 @@ const jwtFrom = ({ headers }) => {
             return token;
         }
     }
-
     return null;
 };
 
@@ -21,7 +20,6 @@ const extractUserFromJwt = (req, res, next) => {
         if (token) {
             res.locals.user = jwt.verify(token, SECRET_KEY);
         }
-
         return next();
     } catch (error) {
         return next(error);
@@ -31,8 +29,8 @@ const extractUserFromJwt = (req, res, next) => {
 //create a function to verify an authed user exists
 const requireAuthenticatedUser = (req, res, next) => {
     try {
-        console.log("We inside rAU!!", res);
         const { user } = res.locals;
+        console.log(res.locals);
         if (!user.email) {
             throw new UnauthorizedError();
         }

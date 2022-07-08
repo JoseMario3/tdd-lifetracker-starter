@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../contexts/auth";
-import apiClient from "./../../services/apiClient"
+import apiClient from "./../../services/apiClient";
 import "./RegistrationForm";
 
 export default function RegistrationForm() {

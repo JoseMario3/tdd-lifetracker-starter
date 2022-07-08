@@ -26,24 +26,28 @@ export const AuthContextProvider = ({ children }) => {
 
   async function fetchUserFromToken() {
     const { data, error } = await ApiClient.fetchUserFromToken();
-    if (data) setUser(data.user);
+    if (data) setUser({ ...data.user });
     if (error) setError(error);
+    setIsProcessing(false);
+    setInitialized(true);
   }
 
   function logoutUser() {
-    console.log(user);
     setLoggedIn(false);
-    ApiClient.setToken(null);
-    localStorage.setItem(this.tokenName, "");
+    ApiClient.setToken("null");
+    localStorage.setItem(this.tokenName, "null");
     setUser({});
   }
 
   useEffect(() => {
     const token = localStorage.getItem("lifetracker_token");
-    if (token) {
-      console.log("setting token");
+
+    if (token !== "null") {
+      setIsProcessing(true);
+      setError(null);
       ApiClient.setToken(token);
       fetchUserFromToken();
+      setLoggedIn(true);
     }
   }, []);
 

@@ -4,7 +4,7 @@ import API_BASE_URL from "./../../constants";
 class ApiClient {
     constructor(remoteHostUrl) {
         this.remoteHostUrl = remoteHostUrl;
-        this.token = null;
+        this.token = "null";
         this.tokenName = "lifetracker_token";
     }
 
@@ -20,8 +20,8 @@ class ApiClient {
             "Content-Type": "application/json",
         };
 
-        if (this.token) {
-            headers["Authorization"] = `Bearer ${this.token}`;
+        if (this.token !== "null") {
+            headers[`Authorization`] = `Bearer ${this.token}`;
         }
 
         try {
@@ -46,7 +46,6 @@ class ApiClient {
 
     async fetchUserFromToken() {
         //use request method to send http request from auth/me endpoint
-        console.log("api Client fetching token");
         return await this.request({ endpoint: `auth/me`, method: `GET` });
     }
 }

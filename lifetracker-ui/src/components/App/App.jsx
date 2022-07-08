@@ -13,7 +13,6 @@ import { AuthContextProvider, useAuthContext } from "../../contexts/auth";
 import "./App.css";
 
 export default function App() {
-
   return (
     <div className="app">
       <React.Fragment>
