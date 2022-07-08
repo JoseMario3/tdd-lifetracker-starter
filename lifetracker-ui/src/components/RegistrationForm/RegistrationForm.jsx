@@ -55,13 +55,13 @@ export default function RegistrationForm() {
       }
     }
 
-    if (event.target.name === "first_name") {
+    if (event.target.name === "firstName") {
       if (event.target.value !== "") {
         setError((e) => ({ ...e, first_name: null }));
       }
     }
 
-    if (event.target.name === "last_name") {
+    if (event.target.name === "lastName") {
       if (event.target.value !== "") {
         setError((e) => ({ ...e, last_name: null }));
       }
@@ -78,8 +78,14 @@ export default function RegistrationForm() {
         setError((e) => ({ ...e, confirmPassword: null }));
       }
     }
+    if (event.target.name === "firstName") {
+      setForm((f) => ({ ...f, first_name: event.target.value }));
+    } else if (event.target.name == "lastName") {
+      setForm((f) => ({ ...f, last_name: event.target.value }));
+    } else {
+      setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
+    }
 
-    setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
 
   const handleOnSubmit = async () => {
@@ -183,7 +189,7 @@ export default function RegistrationForm() {
             <input
               className="form-input"
               type="text"
-              name="first_name"
+              name="firstName"
               placeholder="First Name"
               value={form.first_name}
               onChange={handleOnInputChange}
@@ -197,7 +203,7 @@ export default function RegistrationForm() {
             <input
               className="form-input"
               type="text"
-              name="last_name"
+              name="lastName"
               placeholder="Last Name"
               value={form.last_name}
               onChange={handleOnInputChange}

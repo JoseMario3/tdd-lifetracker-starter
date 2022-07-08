@@ -11,16 +11,16 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [initialized, setInitialized] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [authed, setAuthed] = useState(false);
   const [error, setError] = useState({});
 
   function loginUser(person) {
-    setLoggedIn(true);
+    setAuthed(true);
     setUser({ ...person.user });
   }
 
   function signupUser(person) {
-    setLoggedIn(true);
+    setAuthed(true);
     setUser(person);
   }
 
@@ -33,7 +33,8 @@ export const AuthContextProvider = ({ children }) => {
   }
 
   function logoutUser() {
-    setLoggedIn(false);
+    setInitialized(false);
+    setAuthed(false);
     ApiClient.setToken("null");
     localStorage.setItem(this.tokenName, "null");
     setUser({});
@@ -47,7 +48,7 @@ export const AuthContextProvider = ({ children }) => {
       setError(null);
       ApiClient.setToken(token);
       fetchUserFromToken();
-      setLoggedIn(true);
+      setAuthed(true);
     }
   }, []);
 
@@ -66,8 +67,8 @@ export const AuthContextProvider = ({ children }) => {
         signupUser,
         fetchUserFromToken,
         logoutUser,
-        loggedIn,
-        setLoggedIn,
+        authed,
+        setAuthed,
       }}
     >
       {children}

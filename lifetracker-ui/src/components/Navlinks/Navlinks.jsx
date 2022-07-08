@@ -4,23 +4,23 @@ import { useAuthContext } from "../../contexts/auth";
 import "./Navlinks.css";
 
 export default function Navlinks() {
-  const { loggedIn, logoutUser } = useAuthContext();
+  const { authed, logoutUser } = useAuthContext();
 
   return (
     <ul className="links">
       <li>
-        <Link to={loggedIn ? "/activity" : "/login"}>Activity</Link>
+        <Link to={authed ? "/activity" : "/login"}>Activity</Link>
       </li>
       <li>
-        <Link to={loggedIn ? "/excercise" : "/login"}>Exercise</Link>
+        <Link to={authed ? "/excercise" : "/login"}>Exercise</Link>
       </li>
       <li>
-        <Link to={loggedIn ? "/nutrition" : "/login"}>Nutrition</Link>
+        <Link to={authed ? "/nutrition" : "/login"}>Nutrition</Link>
       </li>
       <li>
-        <Link to={loggedIn ? "/sleep" : "/login"}>Sleep</Link>
+        <Link to={authed ? "/sleep" : "/login"}>Sleep</Link>
       </li>
-      {loggedIn ? (
+      {authed ? (
         <li className="signout-button">
           <Link to="/" onClick={logoutUser}>
             Sign Out

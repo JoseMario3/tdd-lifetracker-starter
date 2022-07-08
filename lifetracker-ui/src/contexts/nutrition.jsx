@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const NutritionContext = createContext();
 export const NutritionContextProvider = ({ children }) => {
-  const { user, loggedIn } = useContext(AuthContext);
+  const { user, authed } = useContext(AuthContext);
 
   const [nutritions, setNutritions] = useState({});
   const [initialized, setInitialized] = useState(false);
@@ -13,7 +13,7 @@ export const NutritionContextProvider = ({ children }) => {
   /*
   useEffect(() => {
     const getNutrition = async () => {
-      if (loggedIn) {
+      if (authed) {
         setIsLoading(true);
       }
 

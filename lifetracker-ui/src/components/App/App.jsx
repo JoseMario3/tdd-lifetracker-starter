@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
-import Landing from "../Landing/Landing";
+import Landing from "../Landing/LandingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegistrationPage from "../RegistrationPage/RegistrationPage";
-//import ActivityPage from "../ActivityPage/ActivityPage";
+import ActivityPage from "../ActivityPage/ActivityPage";
 //import NutritionPage from "../NutritionPage/NutritionPage";
 //import AccessForbidden from "../AccessForbidden/AccessForbidden";
 import NotFound from "../NotFound/NotFound";
@@ -23,8 +23,8 @@ export default function App() {
               <Route path="/" element={<Landing />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegistrationPage />} />
-              {/*<Route path="/activity" element={<ActivityPage />} />
-              <Route path="/nutrition/*" element={<NutritionPage />} />
+              <Route path="/activity" element={<ActivityPage />} />
+              {/*<Route path="/nutrition/*" element={<NutritionPage />} />
               <Route path="/nutrition" element={<AccessForbidden />} />*/}
               <Route path="*" element={<NotFound />} />
             </Routes>
