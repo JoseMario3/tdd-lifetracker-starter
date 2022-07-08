@@ -48,6 +48,16 @@ class ApiClient {
         //use request method to send http request from auth/me endpoint
         return await this.request({ endpoint: `auth/me`, method: `GET` });
     }
+
+    async getActivity() {
+        //return await this.request({ endpoint: `activity`, method: `GET` });
+        return 0;
+    }
+
+    async getNutrition() {
+        //return await this.request({ endpoint: `nutritions`, method: `GET` });
+        return 0;
+    }
 }
 
 export default new ApiClient( API_BASE_URL );

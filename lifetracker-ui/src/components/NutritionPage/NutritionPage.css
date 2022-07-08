@@ -1,0 +1,30 @@
+.nutrition-page {
+    max-width: 100vw;
+    overflow-x: hidden;
+    background: #9381ff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.nutrition-page .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+    margin: 0 auto 0;
+}
+
+.banner {
+    align-items: center;
+    justify-content: center;
+    background: #b8b8ff;
+    height: 120px;
+    width: 100%;
+    display: flex;
+}
+
+.banner h1 {
+    font-size: 42px;
+    color: #f8f7ff;
+}

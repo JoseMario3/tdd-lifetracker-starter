@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const authRoutes = require("./routes/auth");
+const activityRoutes = require("./routes/activity");
 const security = require("./middleware/security");
 
 const { NotFoundError } = require("./utils/error");
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use(morgan("tiny"));
 app.use(security.extractUserFromJwt);
 app.use("/auth", authRoutes);
+app.use("/activity", activityRoutes);
 
 //psql -U postgres
 

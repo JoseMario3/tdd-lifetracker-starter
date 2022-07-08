@@ -23,7 +23,7 @@ Note: This is the only page that unauthenticated users should be able to view.
 [x] Login Page: A form that allows users to login with email and password.
 [x] Registration Page: A form that allows the user to sign up with their email, password, username, first name, and last name.
 [x] When a user first authenticates, they should be redirected to an authenticated view (i.e the detailed activity page). When they sign out, all frontend data should be reset.
-[ ]The API should have a security middleware that only allows authenticated users to access resources and only allows users to access resources about themselves.
+[x] The API should have a security middleware that only allows authenticated users to access resources and only allows users to access resources about themselves.
 [ ] Users should have the ability to track at least 1 types of activities (i.e Nutrition, Exercise, Sleep, etc.). Each activity should be tracked on separate pages.
 [ ] Deploy your website with Heroku & Surge. Checkout our Deploy with Heroku & Surge tutorial for detailed instructions.
 Note: Be sure to follow the deployment instructions for variation #2: Node/Express backend, React frontend, and Postgres database.
@@ -32,14 +32,14 @@ Note: Be sure to follow the deployment instructions for variation #2: Node/Expre
 
 Building this application you will accomplish the following:
 
-- [ ] Develop a full-fledged authentication system using PostgreSQL and Bcrypt
-- [ ] Provide users with an Express API they can interact with to store user-related activity
-- [ ] Construct multiple Models that implement the core business logic associated with tracking users' lives
-- [ ] Write SQL queries that aggregate user statistics and provide summary overviews about their activity
-- [ ] Design a React frontend that interacts with the API using an API service class
-- [ ] Build multiple pages and forms that communicate with the server using HTTP requests
-- [ ] Store user-authenticated JWT tokens in the browser's local storage for persisted authentication
-- [ ] Employ useEffect and useState hooks to manage application state on the frontend
+- [x] Develop a full-fledged authentication system using PostgreSQL and Bcrypt
+- [x] Provide users with an Express API they can interact with to store user-related activity
+- [x] Construct multiple Models that implement the core business logic associated with tracking users' lives
+- [x] Write SQL queries that aggregate user statistics and provide summary overviews about their activity
+- [x] Design a React frontend that interacts with the API using an API service class
+- [x] Build multiple pages and forms that communicate with the server using HTTP requests
+- [x] Store user-authenticated JWT tokens in the browser's local storage for persisted authentication
+- [x] Employ useEffect and useState hooks to manage application state on the frontend
 
 ## Application Features
 
@@ -126,9 +126,9 @@ The components in the `App.jsx` file should render the following components (alo
 
 - To build out the front-end, start with the `App.jsx` component:
 
-  - [ ] **`App.jsx`**
+  - [x] **`App.jsx`**
     - [x] Should be wrapped by an element with the `className` of `app`
-    - [ ] The core App component that contains the routes for the app wrapped in Context providers
+    - [x] The core App component that contains the routes for the app wrapped in Context providers
     - [x] Renders the `Navbar` component on every route
     - [x] Renders a `BrowserRouter` component that contains a `Routes` component with the following routes:
       - [x] `/` - Should render the `Landing.jsx` component
@@ -137,7 +137,7 @@ The components in the `App.jsx` file should render the following components (alo
       - [x] `/activity` - Should render the `ActivityPage.jsx` component (only if the user is logged in, otherwise it renders the `AccessForbidden.jsx` component)
       - [x] `/nutrition/* - should render the `NutritionPage.jsx`component (only if the user is logged in, otherwise it renders the`AccessForbidden.jsx` component)
       - [x] `*` - anything else should render the `NotFound` component
-  - [ ] To standarize API requests throughout the application, set up an **`ApiClient`** class
+  - [x] To standarize API requests throughout the application, set up an **`ApiClient`** class
 
     - [x] Start by creating a `constants.js` file at the root of the project
       - [x] In it, export a few variables:
@@ -151,11 +151,11 @@ The components in the `App.jsx` file should render the following components (alo
       - [x] Give it a constructor function that accepts a single parameter - `remoteHostUrl`. The constructor should attach the `remoteHostUrl` parameter to a new instance with `this.remoteHostUrl = remoteHostUrl`. It should also set `this.token = null`.
       - [x] Export default a new instance of the `ApiClient` class
       - [x] Add an additional method called `setToken` that accepts a single parameter - `token` and attaches it to the instance.
-      - [ ] Create a utility method called `request` that uses `axios` to issue HTTP requests
-      - [ ] Add a `login` method that uses the `request` method to send an HTTP request to the `auth/login` endpoint
-      - [ ] Add a `signup` method that uses the `request` method to send an HTTP request to the `auth/register` endpoint
-      - [ ] Add a `fetchUserFromToken` method that uses the `request` method to send an HTTP request to the `auth/me` endpoint
-      - [ ] **Add as many other methods as needed when making API requests**
+      - [x] Create a utility method called `request` that uses `axios` to issue HTTP requests
+      - [x] Add a `login` method that uses the `request` method to send an HTTP request to the `auth/login` endpoint
+      - [x] Add a `signup` method that uses the `request` method to send an HTTP request to the `auth/register` endpoint
+      - [x] Add a `fetchUserFromToken` method that uses the `request` method to send an HTTP request to the `auth/me` endpoint
+      - [x] **Add as many other methods as needed when making API requests**
 
   - [x] Create an **`auth`** context:
 
@@ -164,24 +164,24 @@ The components in the `App.jsx` file should render the following components (alo
     - [x] In that file, define a new `AuthContext` with `React.createContext`
     - [x] Use that context to create an `AuthContextProvider` component
       - [x] The Provider component should create state variables and updaters needed for `user`, `initialized`, `isProcessing`, and `error`.
-      - [ ] It should have a `React.useEffect` hook that fires when the component is mounted to the screen
-        - [ ] That hook should check to see if a JWT token exists in local storage under the `lifetracker_token` key
-          - [ ] If it does:
-            - [ ] It should add that token to `ApiClient` class with the `setToken` method
-            - [ ] Then, it should set the `isProcessing` state variable to `true` and the `error` state variable to `null`
-            - [ ] Next, it should send a `GET` request to the `/auth/me` endpoint
-              - [ ] If it fails, it should set the `error` prop to a valid error message
-              - [ ] If it is successful...
-                - [ ] It should set the `user` state variable with the `user` returned in the response
-                - [ ] It should set the `error` state variable to `null`
-            - [ ] Regardless, it should set the `isProcessing` state variable to `false` and the `initialized` state variable to `true`
-          - [ ] The user returned from that request should be stored in state. This will ensure that users stay logged in even if they refresh the page.
-      - [ ] It should also define handler functions for:
-        - [ ] `loginUser` - should make a request to log the user in
-        - [ ] `signupUser` - should make a request to sign the user up
-        - [ ] `fetchUserFromToken` - should make a request to the `/auth/me` route to get the user's info
-        - [ ] `logoutUser` - this function should remove the `lifetracker_token` from local storage and refresh the page so that all user data is reset
-      - [ ] Make sure to set all the state variables as the `value` prop passed to the `AuthContext.Provider` component
+      - [x] It should have a `React.useEffect` hook that fires when the component is mounted to the screen
+        - [x] That hook should check to see if a JWT token exists in local storage under the `lifetracker_token` key
+          - [x] If it does:
+            - [x] It should add that token to `ApiClient` class with the `setToken` method
+            - [x] Then, it should set the `isProcessing` state variable to `true` and the `error` state variable to `null`
+            - [x] Next, it should send a `GET` request to the `/auth/me` endpoint
+              - [x] If it fails, it should set the `error` prop to a valid error message
+              - [x] If it is successful...
+                - [x] It should set the `user` state variable with the `user` returned in the response
+                - [x] It should set the `error` state variable to `null`
+            - [x] Regardless, it should set the `isProcessing` state variable to `false` and the `initialized` state variable to `true`
+          - [x] The user returned from that request should be stored in state. This will ensure that users stay logged in even if they refresh the page.
+      - [x] It should also define handler functions for:
+        - [x] `loginUser` - should make a request to log the user in
+        - [x] `signupUser` - should make a request to sign the user up
+        - [x] `fetchUserFromToken` - should make a request to the `/auth/me` route to get the user's info
+        - [x] `logoutUser` - this function should remove the `lifetracker_token` from local storage and refresh the page so that all user data is reset
+      - [x] Make sure to set all the state variables as the `value` prop passed to the `AuthContext.Provider` component
     - [x] Create and export a `useAuthContext` hook that calls the `React.useContext` hook with the newly created `AuthContext` and returns it.
     - [x] In `App.jsx` file create an `AppContainer` component that wraps the `App` component with the `AuthContextProvider` component (which should still be nested inside the `BrowserRouter` component from `react-router-dom`). Export the `AppContainer` component by default instead of the `App`
 
@@ -207,9 +207,9 @@ The components in the `App.jsx` file should render the following components (alo
       - [x] The `/nutrition` route. It should have a label of `Nutrition`.
       - [x] A route for any other resource page
     - [x] If a valid user is logged in:
-      - [ ] It should render an element with the `className` of `logout-button` that calls the `logoutUser` function when clicked.
-        - [ ] That function should remove the `lifetracker_token` from local storage and refresh the page so that all user data is reset.
-    - [ ] If no valid user is logged in:
+      - [x] It should render an element with the `className` of `logout-button` that calls the `logoutUser` function when clicked.
+        - [x] That function should remove the `lifetracker_token` from local storage and refresh the page so that all user data is reset.
+    - [x] If no valid user is logged in:
       - [x] It should render a `Link` element that redirects to the `/login` route with the label `Login`
       - [x] It should render a `Link` element that redirects to the `/register` route with the label `Sign Up`
 
@@ -231,13 +231,13 @@ The components in the `App.jsx` file should render the following components (alo
       - [x] If the user has attempted to login and gotten a `400` or `422` error, then an error message should be displayed in an element with the `className` of `error` indicating what went wrong.
     - [x] There should be a `button` element with the `className` of `submit-login`:
       - [x] It should contain the text `"Login"`
-      - [ ] When clicked, it should call the `loginUser` function
+      - [x] When clicked, it should call the `loginUser` function
 
   - [x] The **`LoginPage.jsx`** component:
 
     - [x] Should render JSX that is wrapped by an element with the `className` of `login-page`
-    - [ ] Using either a custom hook, context, or manually set state, this component should check to see if a user is already logged in
-      - [ ] If the user is already logged in, it should redirect them to the `/activity` page
+    - [x] Using either a custom hook, context, or manually set state, this component should check to see if a user is already logged in
+      - [x] If the user is already logged in, it should redirect them to the `/activity` page
       - [x] If no user is authenticated, it should render the `LoginForm.jsx` component and pass it any props it needs
 
   - [x] The **`RegistrationForm.jsx`** component:
@@ -246,8 +246,8 @@ The components in the `App.jsx` file should render the following components (alo
     - [x] Should render an input element for the following fields:
       - [x] `email`
       - [x] `username`
-      - [ ] `firstName`
-      - [ ] `lastName`
+      - [x] `firstName`
+      - [x] `lastName`
       - [x] `password`
       - [x] `passwordConfirm`
     - [x] Each `input` element in the form should have a `className` of `form-input` and should have the following props set:
@@ -260,16 +260,16 @@ The components in the `App.jsx` file should render the following components (alo
     - [x] The component should validate the `password` and `passwordConfirm` fields:
       - [x] If the user has entered text into the `password` and `passwordConfirm` fields and they don't match, then a message should be displayed in an element with the `className` of `error` with a message that contains the text: `passwords don't match`
     - [x] The component should gracefully handle errors:
-      - [ ] If the user has attempted to login and gotten a `401` error, then the `errors` object should contain a `form` property that contains a message indicating that the `email` and `password` combination is incorrect.
-      - [ ] If the user has attempted to login and gotten a `400` or `422` error, then the `errors` object should contain a `form` property that contains a message indicating what went wrong.
+      - [x] If the user has attempted to login and gotten a `401` error, then the `errors` object should contain a `form` property that contains a message indicating that the `email` and `password` combination is incorrect.
+      - [x] If the user has attempted to login and gotten a `400` or `422` error, then the `errors` object should contain a `form` property that contains a message indicating what went wrong.
     - [x] There should be a `button` element with the `className` of `submit-registration`:
       - [x] It should contain the text `"Create Account"`
-      - [ ] When clicked, it should call the `signupUser` function
+      - [x] When clicked, it should call the `signupUser` function
 
   - [x] The **`RegistrationPage.jsx`** component:
 
     - [x] Should render JSX that is wrapped by an element with the `className` of `registration-page`
-    - [ ] Using either a custom hook, context, or manually handled state, this component should check to see if a user is already logged in
+    - [x] Using either a custom hook, context, or manually handled state, this component should check to see if a user is already logged in
       - [x] If the user is already logged in, it should redirect them to the `/activity` page
       - [x] If no user is authenticated, it should render the `RegistrationForm.jsx` component and pass it any props it needs
 
@@ -284,37 +284,37 @@ The components in the `App.jsx` file should render the following components (alo
   - [x] The **`activity`** context
 
     - [x] Create a file in the `contexts directory - `/contexts/activity.jsx`
-    - [ ] In that file, define a new `ActivityContext` with `React.createContext`
-    - [ ] Use that context to create an `ActivityContextProvider` component
-      - [ ] The `ActivityContextProvider` component should create state variables and updaters needed for `activity`, `initialized`, `isLoading`, and `error`.
-      - [ ] It should call the `useAuthContext` hook and check to see if a valid user is logged in.
-      - [ ] It should have a `React.useEffect` hook that fires when the component is mounted to the screen
-        - [ ] That hook should check to see if a user is logged in.
-        - [ ] If a user is logged in...
-          - [ ] Set the `isLoading` state variable to `true` and the `error` state variable to `null`
-          - [ ] Then, it should make a `GET` request to the `/activity` endpoint
-            - [ ] If there is an error with the request, it should set a message as the `error` state variable
-            - [ ] If all goes well...
-              - [ ] It should set the data as the `activity` state variable
-              - [ ] It should set the `error` state variable to `null`
-          - [ ] Regardless, at the end, set the `isLoading` state variable to `false` and the `initialized` state variable to `true`
-      - [ ] Make sure to pass an object containing all the state variables to the `value` prop of the `ActivityContext.Provider` component
-    - [ ] Create and export a `useActivityContext` hook that calls the `React.useContext` hook with the newly created `ActivityContext` and returns it.
-    - [ ] In the `App.jsx` file, nest the `ActivityContextProvider` inside the `AuthContextProvider`.
+    - [x] In that file, define a new `ActivityContext` with `React.createContext`
+    - [x] Use that context to create an `ActivityContextProvider` component
+      - [x] The `ActivityContextProvider` component should create state variables and updaters needed for `activity`, `initialized`, `isLoading`, and `error`.
+      - [x] It should call the `useAuthContext` hook and check to see if a valid user is logged in.
+      - [x] It should have a `React.useEffect` hook that fires when the component is mounted to the screen
+        - [x] That hook should check to see if a user is logged in.
+        - [x] If a user is logged in...
+          - [x] Set the `isLoading` state variable to `true` and the `error` state variable to `null`
+          - [x] Then, it should make a `GET` request to the `/activity` endpoint
+            - [x] If there is an error with the request, it should set a message as the `error` state variable
+            - [x] If all goes well...
+              - [x] It should set the data as the `activity` state variable
+              - [x] It should set the `error` state variable to `null`
+          - [x] Regardless, at the end, set the `isLoading` state variable to `false` and the `initialized` state variable to `true`
+      - [x] Make sure to pass an object containing all the state variables to the `value` prop of the `ActivityContext.Provider` component
+    - [x] Create and export a `useActivityContext` hook that calls the `React.useContext` hook with the newly created `ActivityContext` and returns it.
+    - [x] In the `App.jsx` file, nest the `ActivityContextProvider` inside the `AuthContextProvider`.
 
-  - [ ] The **`ActivityPage.jsx`** component:
+  - [x] The **`ActivityPage.jsx`** component:
 
-    - [ ] Should render JSX that is wrapped by an element with the `className` of `activity-page`
-    - [ ] It should call the `useActivityContext` hook and extract all the necessary data from it.
-    - [ ] If the `isProcessing` flag is `true`, it should render the `Loading.jsx` component
-    - [ ] If the `isProcessing` flag is `false`, it should render the `ActivityFeed.jsx` component and pass it the appropriate props
+    - [x] Should render JSX that is wrapped by an element with the `className` of `activity-page`
+    - [x] It should call the `useActivityContext` hook and extract all the necessary data from it.
+    - [x] If the `isProcessing` flag is `true`, it should render the `Loading.jsx` component
+    - [x] If the `isProcessing` flag is `false`, it should render the `ActivityFeed.jsx` component and pass it the appropriate props
 
-  - [ ] The **`ActivityFeed.jsx`** component:
+  - [x] The **`ActivityFeed.jsx`** component:
 
-    - [ ] Should render JSX that is wrapped by an element with the `className` of `activity-feed`
-    - [ ] Should accept **at least** the following props:
-      - [ ] `totalCaloriesPerDay` - an array of items containing summary data about the total calories consumed per day
-      - [ ] `avgCaloriesPerCategory` - an array of items containing summary data about the average calories consumed per category
+    - [x] Should render JSX that is wrapped by an element with the `className` of `activity-feed`
+    - [x] Should accept **at least** the following props:
+      - [x] `totalCaloriesPerDay` - an array of items containing summary data about the total calories consumed per day
+      - [x] `avgCaloriesPerCategory` - an array of items containing summary data about the average calories consumed per category
       - [ ] Any other
     - [ ] Inside an element with the `className` of `per-category`, it should:
       - [ ] Render the text: `"Average Calories Per Category` inside an `h4` element
@@ -825,6 +825,9 @@ Here are the pieces of functionality that should be built out for the backend:
 # Open-Source Sites
 
 https://icon-icons.com/icon/exercise-plan-consistant-fitness-diet/149054 (exercise logo)
+
+https://mpng.subpng.com/20180418/aaw/kisspng-no-symbol-slash-clip-art-blue-green-5ad8098d5e77c6.698489961524107661387.jpg
+(red no sign)
 
 ## Wrapping Up and Resources
 

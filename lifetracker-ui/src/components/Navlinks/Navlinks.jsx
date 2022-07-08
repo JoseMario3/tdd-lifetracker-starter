@@ -9,16 +9,16 @@ export default function Navlinks() {
   return (
     <ul className="links">
       <li>
-        <Link to={authed ? "/activity" : "/login"}>Activity</Link>
+        <Link to={authed ? "/activity" : "/forbidden"}>Activity</Link>
       </li>
       <li>
-        <Link to={authed ? "/excercise" : "/login"}>Exercise</Link>
+        <Link to={authed ? "/excercise" : "/forbidden"}>Exercise</Link>
       </li>
       <li>
-        <Link to={authed ? "/nutrition" : "/login"}>Nutrition</Link>
+        <Link to={authed ? "/nutrition" : "/forbidden"}>Nutrition</Link>
       </li>
       <li>
-        <Link to={authed ? "/sleep" : "/login"}>Sleep</Link>
+        <Link to={authed ? "/sleep" : "/forbidden"}>Sleep</Link>
       </li>
       {authed ? (
         <li className="signout-button">

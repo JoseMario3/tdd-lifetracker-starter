@@ -4,30 +4,37 @@ import Landing from "../Landing/LandingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegistrationPage from "../RegistrationPage/RegistrationPage";
 import ActivityPage from "../ActivityPage/ActivityPage";
-//import NutritionPage from "../NutritionPage/NutritionPage";
-//import AccessForbidden from "../AccessForbidden/AccessForbidden";
+import NutritionPage from "../NutritionPage/NutritionPage";
+import AccessForbidden from "../AccessForbidden/AccessForbidden";
 import NotFound from "../NotFound/NotFound";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthContextProvider, useAuthContext } from "../../contexts/auth";
+import { ActivityContextProvider } from "../../contexts/activity";
+import { NutritionContextProvider } from "../../contexts/nutrition";
 //import ApiClient from "../../services/apiClient";
 import "./App.css";
 
 export default function App() {
+
   return (
     <div className="app">
       <React.Fragment>
         <BrowserRouter>
           <AuthContextProvider>
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegistrationPage />} />
-              <Route path="/activity" element={<ActivityPage />} />
-              {/*<Route path="/nutrition/*" element={<NutritionPage />} />
-              <Route path="/nutrition" element={<AccessForbidden />} />*/}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <ActivityContextProvider>
+              <NutritionContextProvider>
+                <Navbar />
+                <Routes>
+                  <Route path="/" element={<Landing />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegistrationPage />} />
+                  <Route path="/activity" element={<ActivityPage />} />
+                  <Route path="/nutrition/*" element={<NutritionPage />} />
+                  <Route path="/forbidden" element={<AccessForbidden />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </NutritionContextProvider>
+            </ActivityContextProvider>
           </AuthContextProvider>
         </BrowserRouter>
       </React.Fragment>

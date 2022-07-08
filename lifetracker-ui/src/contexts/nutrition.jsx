@@ -1,44 +1,50 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
-import { AuthContext } from "./auth";
-import axios from "axios";
+import * as React from "react";
+import { useAuthContext } from "./auth";
+import ApiClient from "../services/apiClient";
 
-export const NutritionContext = createContext();
+export const NutritionContext = React.createContext();
+
+export function useNutritionContext() {
+  return React.useContext(NutritionContext);
+}
+
 export const NutritionContextProvider = ({ children }) => {
-  const { user, authed } = useContext(AuthContext);
+  const [nutritions, setNutritions] = React.useState([]);
+  const [initialized, setInitialized] = React.useState(false);
+  const [isProcessing, setIsProcessing] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState({});
+  const { user, authed } = useAuthContext();
 
-  const [nutritions, setNutritions] = useState({});
-  const [initialized, setInitialized] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({});
-  /*
-  useEffect(() => {
-    const getNutrition = async () => {
-      if (authed) {
+  function addNutrition(newNutrition) {
+    this.setNutritions((prev) => ({
+      nutritions: [...prev.nutritions, newNutrition]
+    }))
+  }
+
+  async function fetchNutrition() {
+    const { data, error } = await ApiClient.getNutrition();
+    if (data) setNutritions({ ...data.user });
+    if (error) setError(error);
+    setIsLoading(false);
+    setIsProcessing(false);
+    setInitialized(true);
+  }
+
+  React.useEffect(() => {
+    setError(null);
+    if(authed) {
         setIsLoading(true);
-      }
-
-      try {
         setIsProcessing(true);
-        setError(null);
-        const response = await axios.get("http://localhost:3001/"); //nutritions
-        console.log(response.data);
-        if (response?.data) {
-          setNutritions(response.data);
-        }
-      } catch (error) {
-        setError(error);
-      }
+        fetchNutrition();
+    }
+    setIsProcessing(false);
+    setIsLoading(false);
+  });
 
-      setIsLoading(false);
-      setInitialized(true);
-    };
-
-    getNutrition();
-  }, []);
-*/
   return (
     <NutritionContext.Provider
-      value={{ nutritions, initialized, isLoading, error }}
+      value={{ nutritions, setError, initialized, isLoading, isProcessing, error, addNutrition }}
     >
       {children}
     </NutritionContext.Provider>

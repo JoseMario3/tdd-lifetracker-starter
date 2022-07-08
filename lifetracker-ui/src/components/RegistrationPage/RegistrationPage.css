@@ -22,6 +22,7 @@
     width: 100%;
     background: transparent;
     color: #f8f7ff;
+    border-radius: 15px;
 }
 
 .registration-page .card {
@@ -46,6 +47,7 @@
     width: 100%;
     padding-bottom: 10px;
     color: #f8f7ff;
+    border-radius: 20%;
 }
 
 .registration-page .card .form {
@@ -55,6 +57,7 @@
     width: 100%;
     padding-bottom: 10px;
     color: #f8f7ff;
+    border-radius: 20%;
 }
 
 .registration-page .card .form .input-field {
@@ -64,6 +67,7 @@
     width: 100%;
     margin: 8px 0;
     flex: 1 1;
+    border-radius: 20%;
 }
 
 .registration-page .card .split-input-field {
@@ -89,9 +93,10 @@
     border: none;
     cursor: pointer;
     margin-top: 15px;
+    border-radius: 15px;
 }
 
-.Register .card .footer {
+.registration-page .card .footer {
     border-top: 1px solid #f8f7ff;
     margin-top: auto;
     height: 50px;
