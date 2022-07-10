@@ -55,14 +55,17 @@ class ApiClient {
     }
 
     async getNutrition() {
-        //return await this.request({ endpoint: `nutritions`, method: `GET` });
-        return 0;
+        return await this.request({ endpoint: `nutrition`, method: `GET` });
     }
 
-    async getNutritionById() {
-        //return await this.request({ endpoint: `nutritions/id`, method: `GET` });
-        return 0;
+    async createNutrition(nutritionForm) {
+        return await this.request({ endpoint: `nutrition/create`, method: `POST`, data: nutritionForm });
     }
+
+    // async getNutritionById() {
+    //     //return await this.request({ endpoint: `nutritions/id`, method: `GET` });
+    //     return 0;
+    // }
 }
 
 export default new ApiClient( API_BASE_URL );

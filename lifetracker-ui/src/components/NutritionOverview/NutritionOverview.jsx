@@ -6,7 +6,9 @@ import Loading from "../Loading/Loading";
 import "./NutritionOverview.css";
 
 export default function NutritionOverview() {
-  const { nutritionStates } = useNutritionContext();
+  const nutritionStates = useNutritionContext();
+  const nutritions = nutritionStates.nutritions;
+  
   return (
     <div className="nutrition-overview">
       {nutritionStates.error?.form && (<span className="error">{nutritionStates.error.form}</span>)}

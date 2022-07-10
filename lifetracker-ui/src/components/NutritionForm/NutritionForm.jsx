@@ -11,7 +11,7 @@ export default function NutritionForm() {
   const [form, setForm] = React.useState({
     name: "",
     calories: "",
-    imageUrl: "",
+    image_url: "",
     category: "",
     quantity: "",
   });
@@ -29,9 +29,9 @@ export default function NutritionForm() {
       }
     }
 
-    if (event.target.name === "imageUrl") {
+    if (event.target.name === "image_url") {
       if (event.target.value !== "") {
-        nutritionStates.setError((e) => ({ ...e, imageUrl: null }));
+        nutritionStates.setError((e) => ({ ...e, image_url: null }));
       }
     }
 
@@ -66,8 +66,8 @@ export default function NutritionForm() {
       return;
     }
 
-    if (form.imageUrl === "") {
-      nutritionStates.setError((e) => ({ ...e, imageUrl: "Please enter an image url" }));
+    if (form.image_url === "") {
+      nutritionStates.setError((e) => ({ ...e, image_url: "Please enter an image url" }));
       setIsLoading(false);
       return;
     }
@@ -84,15 +84,16 @@ export default function NutritionForm() {
       return;
     }
 
-    //const { data, error } = await ApiClient.signup(form);
-    // if (error) {
-    //   nutritionStates.setError((e) => ({ ...e, form: error }));
-    //   setIsLoading(false);
-    // } else if (data?.user) {
-    //   nutritionFunctions.addNutrition(data.user);
-    //   navigate("/nutrition");
-    //   setIsLoading(false);
-    // }
+    const { data, error } = await ApiClient.createNutrition(form);
+    if (error) {
+      nutritionStates.setError((e) => ({ ...e, form: error }));
+      setIsLoading(false);
+    } else if (data?.nutritions) {
+      nutritionFunctions.addNutrition(data.nutritions);
+      console.log("navigating");
+      navigate("/nutrition");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -160,12 +161,12 @@ export default function NutritionForm() {
           <input
             className="form-input"
             type="text"
-            name="imageUrl"
+            name="image_url"
             placeholder="http://i-am-an-image.com"
-            value={form.imageUrl}
+            value={form.image_url}
             onChange={handleOnInputChange}
           />
-          {nutritionStates.error?.imageUrl && (<span className="error">{nutritionStates.error.imageUrl}</span>)}
+          {nutritionStates.error?.image_url && (<span className="error">{nutritionStates.error.image_url}</span>)}
         </div>
         <button className="submit-nutrition" disabled={isLoading} onClick={handleOnSubmit}>
           {isLoading ? "Loading..." : "Save"}

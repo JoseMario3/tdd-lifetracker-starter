@@ -3,6 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const authRoutes = require("./routes/auth");
 const activityRoutes = require("./routes/activity");
+const nutritionRoutes = require("./routes/nutrition");
 const security = require("./middleware/security");
 const { NotFoundError } = require("./utils/error");
 
@@ -13,6 +14,7 @@ app.use(morgan("tiny"));
 app.use(security.extractUserFromJwt);
 app.use("/auth", authRoutes);
 app.use("/activity", activityRoutes);
+app.use("/nutrition", nutritionRoutes);
 
 app.get("/", async(req, res) => {
     res.status(200).json({ ping: "pong" });

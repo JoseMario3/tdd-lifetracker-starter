@@ -26,7 +26,7 @@ export const NutritionContextProvider = ({ children }) => {
 
   async function fetchNutrition() {
     const { data, error } = await ApiClient.getNutrition();
-    if (data) setNutritions({ ...data.user });
+    if (data) setNutritions(data.nutritions);
     if (error) setError(error);
     setIsLoading(false);
     setIsProcessing(false);
@@ -42,7 +42,7 @@ export const NutritionContextProvider = ({ children }) => {
     }
     setIsProcessing(false);
     setIsLoading(false);
-  });
+  },[]);
 
   return (
     <NutritionContext.Provider value={{ nutritionStates, nutritionFunctions }}>
