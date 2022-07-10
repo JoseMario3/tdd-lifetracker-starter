@@ -14,8 +14,10 @@ export const NutritionContextProvider = ({ children }) => {
   const [isProcessing, setIsProcessing] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState({});
-  const { user, authed } = useAuthContext();
-
+  const { authStates } = useAuthContext();
+  const nutritionStates = { nutritions, setError, initialized, isLoading, isProcessing, error };
+  const nutritionFunctions = { addNutrition }
+  
   function addNutrition(newNutrition) {
     this.setNutritions((prev) => ({
       nutritions: [...prev.nutritions, newNutrition]
@@ -33,7 +35,7 @@ export const NutritionContextProvider = ({ children }) => {
 
   React.useEffect(() => {
     setError(null);
-    if(authed) {
+    if(authStates.authed) {
         setIsLoading(true);
         setIsProcessing(true);
         fetchNutrition();
@@ -43,9 +45,7 @@ export const NutritionContextProvider = ({ children }) => {
   });
 
   return (
-    <NutritionContext.Provider
-      value={{ nutritions, setError, initialized, isLoading, isProcessing, error, addNutrition }}
-    >
+    <NutritionContext.Provider value={{ nutritionStates, nutritionFunctions }}>
       {children}
     </NutritionContext.Provider>
   );

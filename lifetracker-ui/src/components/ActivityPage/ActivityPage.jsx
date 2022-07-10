@@ -1,16 +1,24 @@
 import * as React from "react";
-import { useActivityContext } from "../../contexts/activity";
+import { useActivityContext, ActivityContextProvider } from "../../contexts/activity";
 import Loading from "../Loading/Loading";
 import ActivityFeed from "../ActivityFeed/ActivityFeed";
 import "./ActivityPage.css";
 
-export default function ActivityPage() {
+export default function ActivityContainer() {
+  return (
+    <ActivityContextProvider>
+      <ActivityPage />
+    </ActivityContextProvider>
+  )
+}
 
-  const { activity,isProcessing } = useActivityContext();
+function ActivityPage() {
+
+  const { activityStates } = useActivityContext();
 
   return (
     <div className="activity-page">
-      { isProcessing ? (<Loading />) : (<ActivityFeed />) }
+      { activityStates.isProcessing ? (<Loading />) : (<ActivityFeed />) }
     </div>
   );
 }

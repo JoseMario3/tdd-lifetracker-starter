@@ -6,15 +6,15 @@ import Loading from "../Loading/Loading";
 import "./NutritionOverview.css";
 
 export default function NutritionOverview() {
-  const { error, isLoading } = useNutritionContext();
+  const { nutritionStates } = useNutritionContext();
   return (
     <div className="nutrition-overview">
-      {error?.form && (<span className="error">{error.form}</span>)}
+      {nutritionStates.error?.form && (<span className="error">{nutritionStates.error.form}</span>)}
       <div className="header">
         <h3>Overview</h3>
         <Link to="/nutrition/create" className="record">Record Nutrition</Link>
       </div>
-      { isLoading ? (<Loading />) : (<NutritionFeed />) }
+      { nutritionStates.isLoading ? (<Loading />) : (<NutritionFeed />) }
     </div>
   );
 }

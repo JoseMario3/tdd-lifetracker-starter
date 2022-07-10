@@ -1,12 +1,21 @@
 import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 import NutritionOverview from "./../NutritionOverview/NutritionOverview";
+import { NutritionContextProvider } from "../../contexts/nutrition";
 import NutritionNew from "./../NutritionNew/NutritionNew";
 //import NutritionDetail from "./../NutritionDetail/NutritionDetail";
 import NotFound from "./../NotFound/NotFound";
 import "./NutritionPage.css";
 
-export default function NutritionPage() {
+export default function NutritionContainer() {
+  return(
+  <NutritionContextProvider>
+    <NutritionPage />
+  </NutritionContextProvider>
+  )
+}
+
+function NutritionPage() {
   return (
     <div className="nutrition-page">
       <div className="banner">

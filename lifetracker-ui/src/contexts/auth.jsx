@@ -13,6 +13,8 @@ export const AuthContextProvider = ({ children }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [authed, setAuthed] = useState(false);
   const [error, setError] = useState({});
+  const authStates = { error, setError, user, setUser, initialized, setInitialized, isProcessing, setIsProcessing, authed, setAuthed }
+  const authFunctions = { loginUser, signupUser, fetchUserFromToken, logoutUser }
 
   function loginUser(person) {
     setAuthed(true);
@@ -53,24 +55,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{
-        error,
-        setError,
-        user,
-        setUser,
-        initialized,
-        setInitialized,
-        isProcessing,
-        setIsProcessing,
-        loginUser,
-        signupUser,
-        fetchUserFromToken,
-        logoutUser,
-        authed,
-        setAuthed,
-      }}
-    >
+    <AuthContext.Provider value={{ authStates, authFunctions }}>
       {children}
     </AuthContext.Provider>
   );

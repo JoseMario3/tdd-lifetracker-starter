@@ -5,10 +5,10 @@ import { useAuthContext } from "../../contexts/auth";
 import RegistrationForm from "components/RegistrationForm/RegistrationForm";
 
 export default function RegistrationPage() {
-  const { authed } = useAuthContext();
+  const { authStates } = useAuthContext();
   return (
     <div>
-      {authed
+      {authStates.authed
         ? (<Navigate to="/activity" />) : 
         (<div className="registration-page">
         <RegistrationForm />

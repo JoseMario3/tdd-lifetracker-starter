@@ -14,7 +14,8 @@ export const ActivityContextProvider = ({children}) => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [isProcessing, setIsProcessing] = React.useState(false);
     const [error, setError] = React.useState({});
-    const { authed } = useAuthContext();
+    const { authStates } = useAuthContext();
+    const activityStates = { error, activity, initialized, isProcessing }
 
     async function fetchActivity() {
         const { data, error } = await ApiClient.getActivity();
@@ -29,7 +30,7 @@ export const ActivityContextProvider = ({children}) => {
         setIsLoading(true);
         setIsProcessing(true);
         setError(null);
-        if(authed) {
+        if(authStates.authed) {
             fetchActivity();
         }
         setIsProcessing(false);
@@ -37,14 +38,7 @@ export const ActivityContextProvider = ({children}) => {
     })
 
     return (
-        <ActivityContext.Provider
-          value={{
-            error,
-            activity,
-            initialized,
-            isProcessing,
-          }}
-        >
+        <ActivityContext.Provider value={{ activityStates }} >
           {children}
         </ActivityContext.Provider>
       );

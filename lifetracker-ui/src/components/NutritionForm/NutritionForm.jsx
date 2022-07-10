@@ -6,7 +6,7 @@ import "./NutritionForm.css";
 
 export default function NutritionForm() {
   const [isLoading, setIsLoading] = React.useState(false);
-  const { error, setError } = useNutritionContext();
+  const { nutritionStates, nutritionFunctions } = useNutritionContext();
   const navigate = useNavigate();
   const [form, setForm] = React.useState({
     name: "",
@@ -19,32 +19,31 @@ export default function NutritionForm() {
   const handleOnInputChange = (event) => {
     if (event.target.name === "name") {
       if (event.target.value !== "") {
-        console.log("good bye!");
-        setError((e) => ({ ...e, name: null }));
+        nutritionStates.setError((e) => ({ ...e, name: null }));
       }
     }
 
     if (event.target.name === "calories") {
       if (event.target.value !== "") {
-        setError((e) => ({ ...e, calories: null }));
+        nutritionStates.setError((e) => ({ ...e, calories: null }));
       }
     }
 
     if (event.target.name === "imageUrl") {
       if (event.target.value !== "") {
-        setError((e) => ({ ...e, imageUrl: null }));
+        nutritionStates.setError((e) => ({ ...e, imageUrl: null }));
       }
     }
 
     if (event.target.name === "category") {
       if (event.target.value !== "") {
-        setError((e) => ({ ...e, category: null }));
+        nutritionStates.setError((e) => ({ ...e, category: null }));
       }
     }
 
     if (event.target.name === "quantity") {
       if (event.target.value !== "") {
-        setError((e) => ({ ...e, quantity: null }));
+        nutritionStates.setError((e) => ({ ...e, quantity: null }));
       }
     }
 
@@ -53,49 +52,44 @@ export default function NutritionForm() {
 
   const handleOnSubmit = async () => {
     setIsLoading(true);
-    setError((e) => ({ ...e, form: null }));
+    nutritionStates.setError((e) => ({ ...e, form: null }));
 
     if (form.name === "") {
-      console.log("hello!");
-      setError((e) => ({ ...e, name: "Please enter the name" }));
+      nutritionStates.setError((e) => ({ ...e, name: "Please enter the name" }));
       setIsLoading(false);
-      console.log(error);
       return;
     }
 
     if (form.calories === "") {
-      setError((e) => ({ ...e, calories: "Please enter the number of calories" }));
+      nutritionStates.setError((e) => ({ ...e, calories: "Please enter the number of calories" }));
       setIsLoading(false);
       return;
     }
 
     if (form.imageUrl === "") {
-      setError((e) => ({
-        ...e,
-        imageUrl: "Please enter an image url",
-      }));
+      nutritionStates.setError((e) => ({ ...e, imageUrl: "Please enter an image url" }));
       setIsLoading(false);
       return;
     }
 
     if (form.category === "") {
-      setError((e) => ({ ...e, category: "Please enter a category" }));
+      nutritionStates.setError((e) => ({ ...e, category: "Please enter a category" }));
       setIsLoading(false);
       return;
     }
 
     if (form.quantity === "") {
-      setError((e) => ({ ...e, quantity: "Please enter the quantity" }));
+      nutritionStates.setError((e) => ({ ...e, quantity: "Please enter the quantity" }));
       setIsLoading(false);
       return;
     }
 
     //const { data, error } = await ApiClient.signup(form);
     // if (error) {
-    //   setError((e) => ({ ...e, form: error }));
+    //   nutritionStates.setError((e) => ({ ...e, form: error }));
     //   setIsLoading(false);
     // } else if (data?.user) {
-    //   addNutrition(data.user);
+    //   nutritionFunctions.addNutrition(data.user);
     //   navigate("/nutrition");
     //   setIsLoading(false);
     // }
@@ -113,8 +107,8 @@ export default function NutritionForm() {
               value={form.name}
               onChange={handleOnInputChange}
             />
-            {error?.name && (
-              <span className="error">{error.name}</span>
+            {nutritionStates.error?.name && (
+              <span className="error">{nutritionStates.error.name}</span>
             )}
           </div>
           <div className="input-field">
@@ -127,8 +121,8 @@ export default function NutritionForm() {
               value={form.category}
               onChange={handleOnInputChange}
             />
-            {error?.category && (
-              <span className="error">{error.category}</span>
+            {nutritionStates.error?.category && (
+              <span className="error">{nutritionStates.error.category}</span>
             )}
           </div>
           <div className="split-input-field">
@@ -142,8 +136,8 @@ export default function NutritionForm() {
                 value={form.quantity}
                 onChange={handleOnInputChange}
               />
-              {error?.quantity && (
-                <span className="error">{error.quantity}</span>
+              {nutritionStates.error?.quantity && (
+                <span className="error">{nutritionStates.error.quantity}</span>
               )}
             </div>
             <div className="input-field">
@@ -156,8 +150,8 @@ export default function NutritionForm() {
                 value={form.calories}
                 onChange={handleOnInputChange}
               />
-              {error?.calories && (
-                <span className="error">{error.calories}</span>
+              {nutritionStates.error?.calories && (
+                <span className="error">{nutritionStates.error.calories}</span>
               )}
             </div>
           </div>
@@ -171,7 +165,7 @@ export default function NutritionForm() {
             value={form.imageUrl}
             onChange={handleOnInputChange}
           />
-          {error?.imageUrl && (<span className="error">{error.imageUrl}</span>)}
+          {nutritionStates.error?.imageUrl && (<span className="error">{nutritionStates.error.imageUrl}</span>)}
         </div>
         <button className="submit-nutrition" disabled={isLoading} onClick={handleOnSubmit}>
           {isLoading ? "Loading..." : "Save"}

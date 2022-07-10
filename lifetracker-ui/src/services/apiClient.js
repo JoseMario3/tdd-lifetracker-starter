@@ -58,6 +58,11 @@ class ApiClient {
         //return await this.request({ endpoint: `nutritions`, method: `GET` });
         return 0;
     }
+
+    async getNutritionById() {
+        //return await this.request({ endpoint: `nutritions/id`, method: `GET` });
+        return 0;
+    }
 }
 
 export default new ApiClient( API_BASE_URL );

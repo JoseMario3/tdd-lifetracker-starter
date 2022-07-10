@@ -5,10 +5,10 @@ import { useAuthContext } from "../../contexts/auth";
 import "./LoginPage.css";
 
 export default function LoginPage() {
-  const { authed } = useAuthContext();
+  const { authStates } = useAuthContext();
   return (
     <div>
-      {authed
+      {authStates.authed
         ? (<Navigate to="/activity" />) : 
         (<div className="login-page">
         <LoginForm />

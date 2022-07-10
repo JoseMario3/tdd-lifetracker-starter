@@ -19,7 +19,7 @@ router.get("/", security.requireAuthenticatedUser, permission.authedUserOwnsNutr
 
 router.post("/", security.requireAuthenticatedUser, permission.authedUserOwnsNutrition, async (req, res, next) => {
     try {
-
+        return 0;
     } catch (err) {
         next (err);
     }
@@ -27,7 +27,7 @@ router.post("/", security.requireAuthenticatedUser, permission.authedUserOwnsNut
 
 router.get("/:nutritionId", security.requireAuthenticatedUser, permission.authedUserOwnsNutrition, async (req, res, next) => {
     try {
-
+        return 0;
     } catch (err) {
         next (err);
     }
