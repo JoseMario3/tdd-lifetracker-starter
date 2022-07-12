@@ -55,6 +55,7 @@ export default function LoginForm() {
     } else if (data?.user) {
       authFunctions.loginUser(data.user);
       ApiClient.setToken(data.token);
+      setForm((f) => ({}));
       navigate("/activity");
       setIsLoading(false);
     }

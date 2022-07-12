@@ -50,15 +50,16 @@ class ApiClient {
     }
 
     async getActivity() {
-        //return await this.request({ endpoint: `activity`, method: `GET` });
-        return 0;
+        return await this.request({ endpoint: `activity`, method: `GET` });
     }
 
     async getNutrition() {
+        //send an http request to the /nutrition endpoint
         return await this.request({ endpoint: `nutrition`, method: `GET` });
     }
 
     async createNutrition(nutritionForm) {
+        //send an http request to the /nutrition endpoint
         return await this.request({ endpoint: `nutrition/create`, method: `POST`, data: nutritionForm });
     }
 

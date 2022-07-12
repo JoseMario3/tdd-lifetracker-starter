@@ -14,7 +14,7 @@ import "./App.css";
 export default function AppContainer() {
   return (
     <AuthContextProvider>
-      <App />
+        <App />
     </AuthContextProvider>
   );
 }

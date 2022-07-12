@@ -5,11 +5,24 @@ import "./NutritionCard.css";
 export default function NutritionCard({nutrition}) {
   return (
     <div className="nutrition-card">
-      <h1 className="nutrition-name">{nutrition.name}</h1>
-      {nutrition.imageUrl ? (<img className="nutrition-image" src={nutrition.imageUrl}/>) : (null) }
-      <p className="nutrition-calories">{nutrition.calories}</p>
-      <p className="nutrition-category">{nutrition.category}</p>
-      <p className="nutrition-date">{nutrition.createdAt}</p>
+      <div className="card-header">
+        {nutrition.image_url ? (<img className="nutrition-image" src={nutrition.image_url}/>) : (null) }
+        <h2 className="nutrition-name">{nutrition.name}</h2>
+      </div>
+      <div className="card-stats">
+        <div className="card-stat">
+          <p>Calories</p>
+          <span className="nutrition-calories">{nutrition.calories}</span>
+        </div>
+        <div className="card-stat">
+          <p>Quantity</p>
+          <span className="nutrition-quantity">{nutrition.quantity}</span>
+        </div>
+      </div>
+      <div className="card-meta">
+        <small className="nutrition-date">Today at {nutrition.createdAt}</small>
+        <small className="nutrition-category">{nutrition.category}</small>
+      </div>
     </div>
   );
 }

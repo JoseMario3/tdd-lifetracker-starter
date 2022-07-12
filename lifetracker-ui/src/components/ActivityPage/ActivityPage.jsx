@@ -13,12 +13,12 @@ export default function ActivityContainer() {
 }
 
 function ActivityPage() {
-
   const { activityStates } = useActivityContext();
-
+  const perDay = activityStates.activity.perDay ? activityStates.activity.perDay : [];
+  const perCategory = activityStates.activity.perCategory ? activityStates.activity.perCategory : [];
   return (
     <div className="activity-page">
-      { activityStates.isProcessing ? (<Loading />) : (<ActivityFeed />) }
+      <ActivityFeed perDay={perDay} perCategory={perCategory} />
     </div>
   );
 }

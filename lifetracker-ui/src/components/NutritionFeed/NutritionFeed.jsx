@@ -1,11 +1,9 @@
 import * as React from "react";
 import NutritionCard from "./../NutritionCard/NutritionCard";
-import { useNutritionContext } from "../../contexts/nutrition";
 import "./NutritionFeed.css";
 
-export default function NutritionFeed() {
-  const { nutritionStates } = useNutritionContext();
-  const nutritions = nutritionStates.nutritions;
+export default function NutritionFeed({nutritions}) {
+
   return (
     <div className="nutrition-feed">
       { nutritions.length === 0 ? (

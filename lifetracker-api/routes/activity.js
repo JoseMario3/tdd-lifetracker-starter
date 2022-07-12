@@ -5,11 +5,12 @@ const { createUserJwt } = require("../utils/tokens");
 const security = require("../middleware/security");
 const router = express.Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/", security.requireAuthenticatedUser, async (req, res, next) => {
     try {
-        const perDay = await Activity.calculateDailyCaloriesSummaryStats();
-        const perCategory = await Activity.calculatePerCategoryCaloriesSummaryStats();
-        res.status(200).json({ nutrition: { calories: { perDay: perDay, perCategory: perCategory }}})
+        const email = res.locals.user.email;
+        const perDay = await Activity.calculateDailyCaloriesSummaryStats(email);
+        const perCategory = await Activity.calculatePerCategoryCaloriesSummaryStats(email);
+        res.status(200).json({ calories:{ perDay: perDay, perCategory: perCategory}})
     } catch (err) {
         next(err);
     }
