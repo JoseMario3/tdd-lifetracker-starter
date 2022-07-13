@@ -20,7 +20,7 @@ export default function ActivityFeed({perDay, perCategory}) {
       <div className="stats">
         <div className="main">
           <h1>Total Calories Per Day</h1>
-          <div className="per-day">
+          <div className="per">
             {(perDay) ? (perDay.map((day, idx) => {
               return <SummaryStat key={idx} date={day.date} calories={day.totalCalories}/>
             })) : (<h3>No calories per day to show</h3>) }
@@ -28,7 +28,7 @@ export default function ActivityFeed({perDay, perCategory}) {
         </div>
         <div className="more">
           <h1>Average Calories Per Category</h1>
-          <div className="per-category">
+          <div className="per">
             {(perCategory) ? (perCategory.map((category, idx) => {
               return <SummaryStat key={idx} category={category.category} calories={category.avgCaloriesPerCategory} />
             })) : (<h3>No average calories per category to show</h3>) }

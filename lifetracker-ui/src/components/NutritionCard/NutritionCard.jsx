@@ -20,7 +20,6 @@ export default function NutritionCard({nutrition}) {
         </div>
       </div>
       <div className="card-meta">
-        <small className="nutrition-date">Today at {nutrition.createdAt}</small>
         <small className="nutrition-category">{nutrition.category}</small>
       </div>
     </div>

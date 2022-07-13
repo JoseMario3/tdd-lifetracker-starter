@@ -10,7 +10,17 @@ This application will be built using the battle-tested PERN stack - PostgreSQL, 
 
 # Walkthrough Video
 
+Week 5: 
+https://youtu.be/7DB8cUu3vV4
+
+Week 4:
 https://youtu.be/p5_-KsRC6Ww
+
+front-end:
+https://lifetracker-jmf.surge.sh/
+
+back-end:
+https://lifetracker-jmf.herokuapp.com/
 
 # Core Features
 
@@ -24,8 +34,8 @@ Note: This is the only page that unauthenticated users should be able to view.
 [x] Registration Page: A form that allows the user to sign up with their email, password, username, first name, and last name.
 [x] When a user first authenticates, they should be redirected to an authenticated view (i.e the detailed activity page). When they sign out, all frontend data should be reset.
 [x] The API should have a security middleware that only allows authenticated users to access resources and only allows users to access resources about themselves.
-[ ] Users should have the ability to track at least 1 types of activities (i.e Nutrition, Exercise, Sleep, etc.). Each activity should be tracked on separate pages.
-[ ] Deploy your website with Heroku & Surge. Checkout our Deploy with Heroku & Surge tutorial for detailed instructions.
+[x] Users should have the ability to track at least 1 types of activities (i.e Nutrition, Exercise, Sleep, etc.). Each activity should be tracked on separate pages.
+[x] Deploy your website with Heroku & Surge. Checkout our Deploy with Heroku & Surge tutorial for detailed instructions.
 Note: Be sure to follow the deployment instructions for variation #2: Node/Express backend, React frontend, and Postgres database.
 
 ## Goals

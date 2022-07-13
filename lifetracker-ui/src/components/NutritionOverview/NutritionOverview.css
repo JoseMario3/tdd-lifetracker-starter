@@ -3,6 +3,8 @@
     flex-direction: column;
     background: #9381ff;
     height: 500px;
+    width: 100%;
+    max-width: 100vw;
 }
 
 .nutrition-overview .header {

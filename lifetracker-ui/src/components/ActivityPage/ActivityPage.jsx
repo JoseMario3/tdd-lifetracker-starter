@@ -1,13 +1,15 @@
 import * as React from "react";
 import { useActivityContext, ActivityContextProvider } from "../../contexts/activity";
-import Loading from "../Loading/Loading";
+import { AuthContextProvider } from "../../contexts/auth";
 import ActivityFeed from "../ActivityFeed/ActivityFeed";
 import "./ActivityPage.css";
 
 export default function ActivityContainer() {
   return (
     <ActivityContextProvider>
-      <ActivityPage />
+      <AuthContextProvider>
+        <ActivityPage />
+      </AuthContextProvider>
     </ActivityContextProvider>
   )
 }

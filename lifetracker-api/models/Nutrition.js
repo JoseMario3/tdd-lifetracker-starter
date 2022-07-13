@@ -18,7 +18,6 @@ class Nutrition {
         });
 
         const user = await this.fetchUserByEmail(email);
-        console.log("user", user);
 
         const results = await db.query(
             `

@@ -69,37 +69,39 @@
     white-space: nowrap;
 }
 
-.activity-page .activity-feed .stats .main {
-    display: flex;
-    flex-direction: column;
-}
-
-.activity-page .activity-feed .stats .per-day {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    margin-top: 35px;
-    grid-gap: 15px;
-    gap: 15px;
-}
-
-.activity-page .activity-feed .stats .more {
-    display: flex;
-    flex-direction: column;
-}
-
-.activity-page .activity-feed .stats .per-category {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    margin-top: 35px;
-    grid-gap: 15px;
-    gap: 15px;
-}
-
 .activity-page .activity-feed h4 {
     font-weight: 700px;
     font-size: 30px;
     color: white;
     margin-top: 35px;
+}
+.activity-page .activity-feed .stats {
+    margin-left: 35px;
+}
+
+.activity-page .activity-feed .stats .main .per {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    grid-gap: 5px;
+    gap: 10px;
+}
+
+.activity-page .activity-feed .stats .main h1 {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.activity-page .activity-feed .stats .more .per {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    grid-gap: 5px;
+    gap: 10px;
+}
+
+.activity-page .activity-feed .stats .more h1 {
+    color: white;
+    margin-bottom: 10px;
 }

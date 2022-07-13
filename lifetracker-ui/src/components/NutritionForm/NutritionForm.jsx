@@ -88,9 +88,10 @@ export default function NutritionForm() {
     if (error) {
       nutritionStates.setError((e) => ({ ...e, form: error }));
       setIsLoading(false);
-    } else if (data?.nutritions) {
-      nutritionFunctions.addNutrition(data.nutritions);
-      console.log("navigating");
+      navigate("/nutrition");
+    }
+    if (data.nutrition) {
+      nutritionFunctions.fetchNutrition();
       navigate("/nutrition");
       setIsLoading(false);
     }

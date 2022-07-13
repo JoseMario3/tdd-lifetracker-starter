@@ -11,10 +11,9 @@ export function useActivityContext() {
 export const ActivityContextProvider = ({children}) => {
     const [activity, setActivity] = React.useState({});
     const [initialized, setInitialized] = React.useState(false);
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(true);
     const [isProcessing, setIsProcessing] = React.useState(true);
     const [error, setError] = React.useState({});
-    const { authStates } = useAuthContext();
     const activityStates = { error, activity, initialized, isProcessing };
 
     async function fetchActivity() {
@@ -29,7 +28,7 @@ export const ActivityContextProvider = ({children}) => {
         setIsProcessing(true);
         setIsLoading(true);
         setError(null);
-        if(authStates.authed) {
+        if(isLoading) {
             fetchActivity();
             setIsProcessing(false);
         }
