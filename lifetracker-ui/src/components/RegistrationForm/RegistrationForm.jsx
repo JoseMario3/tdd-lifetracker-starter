@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../contexts/auth";
-import apiClient from "./../../services/apiClient"
+import apiClient from "./../../services/apiClient";
 import "./RegistrationForm";
 
 export default function RegistrationForm() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { error, setError, signupUser } = useAuthContext();
+  const { authStates, authFunctions } = useAuthContext();
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -25,17 +25,17 @@ export default function RegistrationForm() {
           passwordConfirm: "Passwords do not match",
         });
       } else {
-        setError((e) => ({ ...e, passwordConfirm: null }));
+        authStates.setError((e) => ({ ...e, passwordConfirm: null }));
       }
     }
     if (event.target.name === "passwordConfirm") {
       if (form.password && form.password !== event.target.value) {
-        setError((e) => ({
+        authStates.setError((e) => ({
           ...e,
           passwordConfirm: "Passwords do not match",
         }));
       } else {
-        setError((e) => ({ ...e, passwordConfirm: null }));
+        authStates.setError((e) => ({ ...e, passwordConfirm: null }));
       }
     }
     if (event.target.name === "email") {
@@ -43,63 +43,69 @@ export default function RegistrationForm() {
         (event.target.value.indexOf("@") === -1 && event.target.value !== "") ||
         event.target.value.indexOf("@") === 0
       ) {
-        setError((e) => ({ ...e, email: "Please enter a valid email." }));
+        authStates.setError((e) => ({ ...e, email: "Please enter a valid email." }));
       } else {
-        setError((e) => ({ ...e, email: null }));
+        authStates.setError((e) => ({ ...e, email: null }));
       }
     }
 
     if (event.target.name === "username") {
       if (event.target.value !== "") {
-        setError((e) => ({ ...e, username: null }));
+        authStates.setError((e) => ({ ...e, username: null }));
       }
     }
 
-    if (event.target.name === "first_name") {
+    if (event.target.name === "firstName") {
       if (event.target.value !== "") {
-        setError((e) => ({ ...e, first_name: null }));
+        authStates.setError((e) => ({ ...e, first_name: null }));
       }
     }
 
-    if (event.target.name === "last_name") {
+    if (event.target.name === "lastName") {
       if (event.target.value !== "") {
-        setError((e) => ({ ...e, last_name: null }));
+        authStates.setError((e) => ({ ...e, last_name: null }));
       }
     }
 
     if (event.target.name === "password") {
       if (event.target.value !== "") {
-        setError((e) => ({ ...e, password: null }));
+        authStates.setError((e) => ({ ...e, password: null }));
       }
     }
 
     if (event.target.name === "confirmPassword") {
       if (event.target.value !== "") {
-        setError((e) => ({ ...e, confirmPassword: null }));
+        authStates.setError((e) => ({ ...e, confirmPassword: null }));
       }
     }
+    if (event.target.name === "firstName") {
+      setForm((f) => ({ ...f, first_name: event.target.value }));
+    } else if (event.target.name == "lastName") {
+      setForm((f) => ({ ...f, last_name: event.target.value }));
+    } else {
+      setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
+    }
 
-    setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
 
   const handleOnSubmit = async () => {
     setIsLoading(true);
-    setError((e) => ({ ...e, form: null }));
+    authStates.setError((e) => ({ ...e, form: null }));
 
     if (form.email === "") {
-      setError((e) => ({ ...e, email: "Please enter an email" }));
+      authStates.setError((e) => ({ ...e, email: "Please enter an email" }));
       setIsLoading(false);
       return;
     }
 
     if (form.username === "") {
-      setError((e) => ({ ...e, username: "Please enter a username" }));
+      authStates.setError((e) => ({ ...e, username: "Please enter a username" }));
       setIsLoading(false);
       return;
     }
 
     if (form.first_name === "") {
-      setError((e) => ({
+      authStates.setError((e) => ({
         ...e,
         first_name: "Please enter your first name",
       }));
@@ -108,19 +114,19 @@ export default function RegistrationForm() {
     }
 
     if (form.last_name === "") {
-      setError((e) => ({ ...e, last_name: "Please enter your last name" }));
+      authStates.setError((e) => ({ ...e, last_name: "Please enter your last name" }));
       setIsLoading(false);
       return;
     }
 
     if (form.password === "") {
-      setError((e) => ({ ...e, password: "Please enter a password" }));
+      authStates.setError((e) => ({ ...e, password: "Please enter a password" }));
       setIsLoading(false);
       return;
     }
 
     if (form.confirmPassword === "") {
-      setError((e) => ({
+      authStates.setError((e) => ({
         ...e,
         confirmPassword: "Please confirm your password",
       }));
@@ -129,19 +135,19 @@ export default function RegistrationForm() {
     }
 
     if (form.passwordConfirm !== form.password) {
-      setError((e) => ({ ...e, passwordConfirm: "Passwords do not match." }));
+      authStates.setError((e) => ({ ...e, passwordConfirm: "Passwords do not match." }));
       setIsLoading(false);
       return;
     } else {
-      setError((e) => ({ ...e, passwordConfirm: null }));
+      authStates.setError((e) => ({ ...e, passwordConfirm: null }));
     }
 
     const { data, error } = await apiClient.signup(form);
     if (error) {
-      setError((e) => ({ ...e, form: error }));
+      authStates.setError((e) => ({ ...e, form: error }));
       setIsLoading(false);
     } else if (data?.user) {
-      signupUser(data.user);
+      authFunctions.signupUser(data.user);
       apiClient.setToken(data.token);
       navigate("/");
       setIsLoading(false);
@@ -151,7 +157,7 @@ export default function RegistrationForm() {
   return (
     <div className="card">
       <h2>Register</h2>
-      {error?.form && (<span className="error">{error.form}</span>)}
+      {authStates.error?.form && (<span className="error">{authStates.error.form}</span>)}
       <div className="form">
         <div className="input-field">
           <label>Email</label>
@@ -163,7 +169,7 @@ export default function RegistrationForm() {
             value={form.email}
             onChange={handleOnInputChange}
           />
-          {error.email && <span className="error">{error.email}</span>}
+          {authStates.error.email && <span className="error">{authStates.error.email}</span>}
         </div>
         <div className="input-field">
           <label>Username</label>
@@ -175,7 +181,7 @@ export default function RegistrationForm() {
             value={form.username}
             onChange={handleOnInputChange}
           />
-          {error.username && <span className="error">{error.username}</span>}
+          {authStates.error.username && <span className="error">{authStates.error.username}</span>}
         </div>
         <div className="split-input-field">
           <div className="input-field">
@@ -183,13 +189,13 @@ export default function RegistrationForm() {
             <input
               className="form-input"
               type="text"
-              name="first_name"
+              name="firstName"
               placeholder="First Name"
               value={form.first_name}
               onChange={handleOnInputChange}
             />
-            {error.first_name && (
-              <span className="error">{error.first_name}</span>
+            {authStates.error.first_name && (
+              <span className="error">{authStates.error.first_name}</span>
             )}
           </div>
           <div className="input-field">
@@ -197,13 +203,13 @@ export default function RegistrationForm() {
             <input
               className="form-input"
               type="text"
-              name="last_name"
+              name="lastName"
               placeholder="Last Name"
               value={form.last_name}
               onChange={handleOnInputChange}
             />
-            {error.last_name && (
-              <span className="error">{error.last_name}</span>
+            {authStates.error.last_name && (
+              <span className="error">{authStates.error.last_name}</span>
             )}
           </div>
         </div>
@@ -217,7 +223,7 @@ export default function RegistrationForm() {
             value={form.password}
             onChange={handleOnInputChange}
           />
-          {error.password && <span className="error">{error.password}</span>}
+          {authStates.error.password && <span className="error">{authStates.error.password}</span>}
         </div>
         <div className="input-field">
           <label>Confirm Password</label>
@@ -229,8 +235,8 @@ export default function RegistrationForm() {
             value={form.passwordConfirm}
             onChange={handleOnInputChange}
           />
-          {error.passwordConfirm && (
-            <span className="error">{error.passwordConfirm}</span>
+          {authStates.error.passwordConfirm && (
+            <span className="error">{authStates.error.passwordConfirm}</span>
           )}
         </div>
         <button className="submit-registration" onClick={handleOnSubmit}>

@@ -1,0 +1,49 @@
+.summary-stat {
+    display: flex;
+    border-radius: 20px;
+    background: purple;
+    flex-direction: column;
+    margin: 10px;
+    width: 150px;
+    height: 70px;
+    color: white;
+}
+
+.summary-stat .per-day {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+    width: 150px;
+    margin-top: 0px;
+}
+
+.summary-stat .per-day h1 {
+    margin-top: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.summary-stat .per-day p {
+    text-align: center;
+}
+
+.summary-stat .per-category {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+    width: 150px;
+    margin-top: 0px;
+}
+
+
+.summary-stat .per-category h1 {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.summary-stat .per-category p {
+    text-align: center;
+}

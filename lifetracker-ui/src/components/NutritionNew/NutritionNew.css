@@ -1,0 +1,13 @@
+.nutrition-new h2 {
+    text-align: center;
+    font-size: 31px;
+    color: white;
+}
+
+.nutrition-new {
+    height: 580px;
+}
+
+.nutrition-form .error {
+    color: #ffd8be;
+}

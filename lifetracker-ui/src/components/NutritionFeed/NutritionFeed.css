@@ -1,0 +1,23 @@
+.nutrition-overview .nutrition-feed {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    grid-gap: 5px;
+    gap: 10px;
+    margin-top: 50px;
+    padding-bottom: 50px;
+    background: #9381ff;
+    width: 80%;
+}
+
+.empty {
+    margin: 0 auto;
+}
+
+.empty h2 {
+    font-size: 32px;
+    color: #f8f7ff;
+    padding: 10px 20px;
+    border: 1px solid #f8f7ff;
+    border-radius: 4px;
+}

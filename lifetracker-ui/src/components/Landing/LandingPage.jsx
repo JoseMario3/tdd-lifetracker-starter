@@ -1,6 +1,6 @@
 import * as React from "react";
 import smartwatch from "../../assets/smartwatch.svg";
-import "./Landing.css";
+import "./LandingPage.css";
 
 export default function Landing() {
   return (

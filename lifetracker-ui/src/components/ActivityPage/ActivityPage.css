@@ -1,0 +1,10 @@
+.activity-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 100vw;
+    overflow-x: hidden;
+    background: #9381ff;
+    height: 1000px;
+}
+

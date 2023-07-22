@@ -7,11 +7,8 @@ import ApiClient from "../../services/apiClient"
 export default function LoginForm() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { error, setError, loginUser } = useAuthContext();
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+  const { authStates, authFunctions } = useAuthContext();
+  const [form, setForm] = useState({ email: "", password: "" });
 
   const handleOnInputChange = (event) => {
     if (event.target.name === "email") {
@@ -19,15 +16,15 @@ export default function LoginForm() {
         (event.target.value.indexOf("@") === -1 && event.target.value !== "") ||
         event.target.value.indexOf("@") === 0
       ) {
-        setError((e) => ({ ...e, email: "Please enter a valid email" }));
+        authStates.setError((e) => ({ ...e, email: "Please enter a valid email" }));
       } else {
-        setError((e) => ({ ...e, email: null }));
+        authStates.setError((e) => ({ ...e, email: null }));
       }
     }
 
     if (event.target.name === "password") {
       if (event.target.value !== "") {
-        setError((e) => ({ ...e, password: null }));
+        authStates.setError((e) => ({ ...e, password: null }));
       }
     }
 
@@ -37,28 +34,28 @@ export default function LoginForm() {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    setError((e) => ({ ...e, form: null }));
+    authStates.setError((e) => ({ ...e, form: null }));
 
     if (form.email === "") {
-      setError((e) => ({ ...e, email: "Please enter an email" }));
+      authStates.setError((e) => ({ ...e, email: "Please enter an email" }));
       setIsLoading(false);
       return;
     }
 
     if (form.password === "") {
-      setError((e) => ({ ...e, password: "Please enter a password" }));
+      authStates.setError((e) => ({ ...e, password: "Please enter a password" }));
       setIsLoading(false);
       return;
     }
 
     const { data, error } = await ApiClient.login(form);
     if (error) {
-      setError((e) => ({ ...e, form: error }));
+      authStates.setError((e) => ({ ...e, form: error }));
       setIsLoading(false);
     } else if (data?.user) {
-      loginUser(data.user);
-      console.log(data.user);
+      authFunctions.loginUser(data.user);
       ApiClient.setToken(data.token);
+      setForm((f) => ({}));
       navigate("/activity");
       setIsLoading(false);
     }
@@ -69,7 +66,7 @@ export default function LoginForm() {
       <div className="header">
         <h2>Login</h2>
       </div>
-      {error?.form && (<span className="error">{error.form}</span>)}
+      {authStates.error?.form && (<span className="error">{authStates.error.form}</span>)}
       <div className="form">
         <div className="input-field">
           <label>Email</label>
@@ -80,7 +77,7 @@ export default function LoginForm() {
             onChange={handleOnInputChange}
             value={form.email}
           />
-          {error?.email && (<span className="error">{error.email}</span>)}
+          {authStates.error?.email && (<span className="error">{authStates.error.email}</span>)}
         </div>
         <div className="input-field">
           <label>Password</label>
@@ -91,7 +88,7 @@ export default function LoginForm() {
             onChange={handleOnInputChange}
             value={form.password}
           />
-          {error?.password && (<span className="error">{error.password}</span>)}
+          {authStates.error?.password && (<span className="error">{authStates.error.password}</span>)}
         </div>
         <button className="btn" disabled={isLoading} onClick={handleOnSubmit}>
           {" "}
